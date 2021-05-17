@@ -30,6 +30,8 @@ public class TwoClass extends AppCompatActivity {
     private String filename;
     private int xDelta, yDelta;
 
+    static Bitmap bitmap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
