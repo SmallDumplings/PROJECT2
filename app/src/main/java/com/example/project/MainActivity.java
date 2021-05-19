@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextInputLayout mTextInputLayout;
     private EditText mEditText;
+    String text;
 
     Button start;
 
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, TwoClass.class);
+                text = mEditText.getText().toString();
+                intent.putExtra("text", text);
                 startActivity(intent);
             }
         });

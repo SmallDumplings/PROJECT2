@@ -1,0 +1,2556 @@
+Index: app/src/main/java/com/example/project/TwoClass.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/TwoClass.java	(revision 3ea6201fd1280928d65f40379b2b3fb5218acdc2)
++++ app/src/main/java/com/example/project/TwoClass.java	(date 1621440301474)
+@@ -1,5 +1,6 @@
+ package com.example.project;
+ 
++import android.annotation.SuppressLint;
+ import android.content.Intent;
+ import android.database.Cursor;
+ import android.graphics.Bitmap;
+@@ -7,16 +8,23 @@
+ import android.net.Uri;
+ import android.os.Bundle;
+ import android.provider.OpenableColumns;
++import android.text.Layout;
+ import android.view.MotionEvent;
+ import android.view.View;
+ import android.widget.Button;
++import android.widget.EditText;
+ import android.widget.FrameLayout;
++import android.widget.ImageButton;
+ import android.widget.ImageView;
++import android.widget.RelativeLayout;
++import android.widget.TextView;
+ import android.widget.Toast;
+ 
+ 
+ import androidx.annotation.Nullable;
+ import androidx.appcompat.app.AppCompatActivity;
++import androidx.constraintlayout.widget.ConstraintLayout;
++import androidx.core.view.ViewCompat;
+ 
+ 
+ import com.yalantis.ucrop.UCrop;
+@@ -24,20 +32,33 @@
+ import java.io.File;
+ 
+ public class TwoClass extends AppCompatActivity {
+-    Button b1,b2,b3,b4, b5;
++    ImageButton b1,b2,b3,b4, b5;
+     private FrameLayout container;
+     private static final int REQUEST_IMAGE = 101;
+     private String filename;
+     private int xDelta, yDelta;
+ 
+     static Bitmap bitmap;
++    String text;
++    TextView textView;
++
++    Button f74ok;
++    Button cancel;
++    EditText text_input;
++    RelativeLayout text_input_layout;
++    ConstraintLayout constraintLayout;
+ 
+ 
++
++    @SuppressLint("WrongViewCast")
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.two_two_layout);
+         container = findViewById(R.id.container);
++        textView = findViewById(R.id.text);
++        b5 = findViewById(R.id.b5);
++        b1 = findViewById(R.id.b1);
+         b5.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+@@ -55,6 +76,11 @@
+ 
+             }
+         });
++//        arguments = getIntent().getExtras();
++//        text = arguments.get("text").toString();
++        text = getIntent().getStringExtra("text");
++        textView.setText(text);
++
+ 
+     }
+     @Override
+@@ -155,6 +181,42 @@
+         }
+         return result;
+     }
++
++
++    public void addTextInfo() {
++
++        this.text_input_layout = (RelativeLayout) findViewById(R.id.addtextlayout);
++        this.text_input_layout.setVisibility(0);
++        this.text_input = (EditText) findViewById(R.id.textarea);
++        this.f74ok = (Button) findViewById(R.id.add);
++        this.cancel = (Button) findViewById(R.id.cancel);
++        this.f74ok.setOnClickListener(new View.OnClickListener() {
++            public void onClick(View view) {
++                if (TwoClass.this.text_input.getText().toString().length() > 0) {
++                    TextSticker textSticker = new TextSticker(TwoClass.this);
++                    textSticker.setText(TwoClass.this.text_input.getText().toString());
++                    textSticker.setTextAlign(Layout.Alignment.ALIGN_CENTER);
++                    textSticker.resizeText();
++                    textSticker.setTextColor(ViewCompat.MEASURED_STATE_MASK);
++                    TwoClass.this.stickerView.addSticker(textSticker);
++                    TwoClass.this.stickerView.invalidate();
++                    TwoClass.this.text_input.setText("");
++                    TwoClass.this.text_input_layout.setVisibility(8);
++                    return;
++                }
++                Toast.makeText(TwoClass.this, "No Input", 0).show();
++            }
++        });
++
++        this.cancel.setOnClickListener(new View.OnClickListener() {
++            public void onClick(View view) {
++                TwoClass.this.text_input.setText("");
++                TwoClass.this.text_input_layout.setVisibility(8);
++            }
++        });
++
++    }
++
+ }
+ 
+ 
+Index: app/src/main/java/com/example/project/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/MainActivity.java	(revision 3ea6201fd1280928d65f40379b2b3fb5218acdc2)
++++ app/src/main/java/com/example/project/MainActivity.java	(date 1621437459889)
+@@ -23,6 +23,7 @@
+ 
+     private TextInputLayout mTextInputLayout;
+     private EditText mEditText;
++    String text;
+ 
+     Button start;
+ 
+@@ -40,6 +41,8 @@
+             @Override
+             public void onClick(View v) {
+                 Intent intent = new Intent(MainActivity.this, TwoClass.class);
++                text = mEditText.getText().toString();
++                intent.putExtra("text", text);
+                 startActivity(intent);
+             }
+         });
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 3ea6201fd1280928d65f40379b2b3fb5218acdc2)
++++ app/build.gradle	(date 1621440405191)
+@@ -33,6 +33,7 @@
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+     // https://mvnrepository.com/artifact/com.yalantis/ucrop
+     implementation group: 'com.yalantis', name: 'ucrop', version: '2.2.0'
++    implementation 'androidx.appcompat:appcompat:1.2.0-alpha02'
+ 
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 3ea6201fd1280928d65f40379b2b3fb5218acdc2)
++++ app/src/main/AndroidManifest.xml	(date 1621436344317)
+@@ -20,6 +20,14 @@
+             <intent-filter>
+                 <action android:name="android.intent.action.DIALOG" />
+ 
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++            android:theme="@style/Theme.AppCompat.Dialog";>
++        </activity>
++        <activity android:name=".TwoClass">
++            <intent-filter>
++                <action android:name="android.intent.action.TWO_CLASS" />
++
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+             android:theme="@style/Theme.AppCompat.Dialog";>
+Index: app/src/main/java/com/example/project/sticker/ZoomIconEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/ZoomIconEvent.java	(date 1621441032107)
++++ app/src/main/java/com/example/project/sticker/ZoomIconEvent.java	(date 1621441032107)
+@@ -0,0 +1,27 @@
++package com.example.project.sticker;
++
++import android.view.MotionEvent;
++
++/**
++ * @author wupanjie
++ */
++
++public class ZoomIconEvent implements StickerIconEvent {
++  @Override
++  public void onActionDown(StickerView stickerView, MotionEvent event) {
++
++  }
++
++  @Override
++  public void onActionMove(StickerView stickerView, MotionEvent event) {
++    stickerView.zoomAndRotateCurrentSticker(event);
++  }
++
++  @Override
++  public void onActionUp(StickerView stickerView, MotionEvent event) {
++    if (stickerView.getOnStickerOperationListener() != null) {
++      stickerView.getOnStickerOperationListener()
++          .onStickerZoomFinished(stickerView.getCurrentSticker());
++    }
++  }
++}
+Index: app/src/main/res/drawable/rounded_yellow.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/rounded_yellow.xml	(date 1621438354150)
++++ app/src/main/res/drawable/rounded_yellow.xml	(date 1621438354150)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <solid android:color="#FDB757"/>
++    <stroke android:width="3dp" android:color="#FDB757" />
++    <corners android:radius="10dp"/>
++    <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
++</shape>
+\ No newline at end of file
+Index: app/src/main/java/com/example/project/sticker/TextSticker.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/TextSticker.java	(date 1621441032032)
++++ app/src/main/java/com/example/project/sticker/TextSticker.java	(date 1621441032032)
+@@ -0,0 +1,321 @@
++package com.example.project.sticker;
++
++import android.content.Context;
++import android.graphics.Canvas;
++import android.graphics.Matrix;
++import android.graphics.Rect;
++import android.graphics.Typeface;
++import android.graphics.drawable.Drawable;
++import android.text.Layout;
++import android.text.StaticLayout;
++import android.text.TextPaint;
++
++import androidx.annotation.ColorInt;
++import androidx.annotation.Dimension;
++import androidx.annotation.IntRange;
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++import androidx.core.content.ContextCompat;
++
++/**
++ * Customize your sticker with text and image background.
++ * You can place some text into a given region, however,
++ * you can also add a plain text sticker. To support text
++ * auto resizing , I take most of the code from AutoResizeTextView.
++ * See https://adilatwork.blogspot.com/2014/08/android-textview-which-resizes-its-text.html
++ * Notice: It's not efficient to add long text due to too much of
++ * StaticLayout object allocation.
++ * Created by liutao on 30/11/2016.
++ */
++
++public class TextSticker extends Sticker {
++
++  /**
++   * Our ellipsis string.
++   */
++  private static final String mEllipsis = "\u2026";
++
++  private final Context context;
++  private final Rect realBounds;
++  private final Rect textRect;
++  private final TextPaint textPaint;
++  private Drawable drawable;
++  private StaticLayout staticLayout;
++  private Layout.Alignment alignment;
++  private String text;
++
++  /**
++   * Upper bounds for text size.
++   * This acts as a starting point for resizing.
++   */
++  private float maxTextSizePixels;
++
++  /**
++   * Lower bounds for text size.
++   */
++  private float minTextSizePixels;
++
++  /**
++   * Line spacing multiplier.
++   */
++  private float lineSpacingMultiplier = 1.0f;
++
++  /**
++   * Additional line spacing.
++   */
++  private float lineSpacingExtra = 0.0f;
++
++  public TextSticker(@NonNull Context context) {
++    this(context, null);
++  }
++
++  public TextSticker(@NonNull Context context, @Nullable Drawable drawable) {
++    this.context = context;
++    this.drawable = drawable;
++    if (drawable == null) {
++      this.drawable = ContextCompat.getDrawable(context, R.drawable.sticker_transparent_background);
++    }
++    textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
++    realBounds = new Rect(0, 0, getWidth(), getHeight());
++    textRect = new Rect(0, 0, getWidth(), getHeight());
++    minTextSizePixels = convertSpToPx(6);
++    maxTextSizePixels = convertSpToPx(32);
++    alignment = Layout.Alignment.ALIGN_CENTER;
++    textPaint.setTextSize(maxTextSizePixels);
++  }
++
++  @Override
++  public void draw(@NonNull Canvas canvas) {
++    Matrix matrix = getMatrix();
++    canvas.save();
++    canvas.concat(matrix);
++    if (drawable != null) {
++      drawable.setBounds(realBounds);
++      drawable.draw(canvas);
++    }
++    canvas.restore();
++
++    canvas.save();
++    canvas.concat(matrix);
++    if (textRect.width() == getWidth()) {
++      int dy = getHeight() / 2 - staticLayout.getHeight() / 2;
++      // center vertical
++      canvas.translate(0, dy);
++    } else {
++      int dx = textRect.left;
++      int dy = textRect.top + textRect.height() / 2 - staticLayout.getHeight() / 2;
++      canvas.translate(dx, dy);
++    }
++    staticLayout.draw(canvas);
++    canvas.restore();
++  }
++
++  @Override
++  public int getWidth() {
++    return drawable.getIntrinsicWidth();
++  }
++
++  @Override
++  public int getHeight() {
++    return drawable.getIntrinsicHeight();
++  }
++
++  @Override
++  public void release() {
++    super.release();
++    if (drawable != null) {
++      drawable = null;
++    }
++  }
++
++  @NonNull @Override
++  public com.xiaopo.sticker.TextSticker setAlpha(@IntRange(from = 0, to = 255) int alpha) {
++    textPaint.setAlpha(alpha);
++    return this;
++  }
++
++  @NonNull @Override
++  public Drawable getDrawable() {
++    return drawable;
++  }
++
++  @Override
++  public com.xiaopo.sticker.TextSticker setDrawable(@NonNull Drawable drawable) {
++    this.drawable = drawable;
++    realBounds.set(0, 0, getWidth(), getHeight());
++    textRect.set(0, 0, getWidth(), getHeight());
++    return this;
++  }
++
++  @NonNull public com.xiaopo.sticker.TextSticker setDrawable(@NonNull Drawable drawable, @Nullable Rect region) {
++    this.drawable = drawable;
++    realBounds.set(0, 0, getWidth(), getHeight());
++    if (region == null) {
++      textRect.set(0, 0, getWidth(), getHeight());
++    } else {
++      textRect.set(region.left, region.top, region.right, region.bottom);
++    }
++    return this;
++  }
++
++  @NonNull public com.xiaopo.sticker.TextSticker setTypeface(@Nullable Typeface typeface) {
++    textPaint.setTypeface(typeface);
++    return this;
++  }
++
++  @NonNull public com.xiaopo.sticker.TextSticker setTextColor(@ColorInt int color) {
++    textPaint.setColor(color);
++    return this;
++  }
++
++  @NonNull public com.xiaopo.sticker.TextSticker setTextAlign(@NonNull Layout.Alignment alignment) {
++    this.alignment = alignment;
++    return this;
++  }
++
++  @NonNull public com.xiaopo.sticker.TextSticker setMaxTextSize(@Dimension(unit = Dimension.SP) float size) {
++    textPaint.setTextSize(convertSpToPx(size));
++    maxTextSizePixels = textPaint.getTextSize();
++    return this;
++  }
++
++  /**
++   * Sets the lower text size limit
++   *
++   * @param minTextSizeScaledPixels the minimum size to use for text in this view,
++   * in scaled pixels.
++   */
++  @NonNull public com.xiaopo.sticker.TextSticker setMinTextSize(float minTextSizeScaledPixels) {
++    minTextSizePixels = convertSpToPx(minTextSizeScaledPixels);
++    return this;
++  }
++
++  @NonNull public com.xiaopo.sticker.TextSticker setLineSpacing(float add, float multiplier) {
++    lineSpacingMultiplier = multiplier;
++    lineSpacingExtra = add;
++    return this;
++  }
++
++  @NonNull public com.xiaopo.sticker.TextSticker setText(@Nullable String text) {
++    this.text = text;
++    return this;
++  }
++
++  @Nullable public String getText() {
++    return text;
++  }
++
++  /**
++   * Resize this view's text size with respect to its width and height
++   * (minus padding). You should always call this method after the initialization.
++   */
++  @NonNull public com.xiaopo.sticker.TextSticker resizeText() {
++    final int availableHeightPixels = textRect.height();
++
++    final int availableWidthPixels = textRect.width();
++
++    final CharSequence text = getText();
++
++    // Safety check
++    // (Do not resize if the view does not have dimensions or if there is no text)
++    if (text == null
++        || text.length() <= 0
++        || availableHeightPixels <= 0
++        || availableWidthPixels <= 0
++        || maxTextSizePixels <= 0) {
++      return this;
++    }
++
++    float targetTextSizePixels = maxTextSizePixels;
++    int targetTextHeightPixels =
++        getTextHeightPixels(text, availableWidthPixels, targetTextSizePixels);
++
++    // Until we either fit within our TextView
++    // or we have reached our minimum text size,
++    // incrementally try smaller sizes
++    while (targetTextHeightPixels > availableHeightPixels
++        && targetTextSizePixels > minTextSizePixels) {
++      targetTextSizePixels = Math.max(targetTextSizePixels - 2, minTextSizePixels);
++
++      targetTextHeightPixels =
++          getTextHeightPixels(text, availableWidthPixels, targetTextSizePixels);
++    }
++
++    // If we have reached our minimum text size and the text still doesn't fit,
++    // append an ellipsis
++    // (NOTE: Auto-ellipsize doesn't work hence why we have to do it here)
++    if (targetTextSizePixels == minTextSizePixels
++        && targetTextHeightPixels > availableHeightPixels) {
++      // Make a copy of the original TextPaint object for measuring
++      TextPaint textPaintCopy = new TextPaint(textPaint);
++      textPaintCopy.setTextSize(targetTextSizePixels);
++
++      // Measure using a StaticLayout instance
++      StaticLayout staticLayout =
++          new StaticLayout(text, textPaintCopy, availableWidthPixels, Layout.Alignment.ALIGN_NORMAL,
++              lineSpacingMultiplier, lineSpacingExtra, false);
++
++      // Check that we have a least one line of rendered text
++      if (staticLayout.getLineCount() > 0) {
++        // Since the line at the specific vertical position would be cut off,
++        // we must trim up to the previous line and add an ellipsis
++        int lastLine = staticLayout.getLineForVertical(availableHeightPixels) - 1;
++
++        if (lastLine >= 0) {
++          int startOffset = staticLayout.getLineStart(lastLine);
++          int endOffset = staticLayout.getLineEnd(lastLine);
++          float lineWidthPixels = staticLayout.getLineWidth(lastLine);
++          float ellipseWidth = textPaintCopy.measureText(mEllipsis);
++
++          // Trim characters off until we have enough room to draw the ellipsis
++          while (availableWidthPixels < lineWidthPixels + ellipseWidth) {
++            endOffset--;
++            lineWidthPixels =
++                textPaintCopy.measureText(text.subSequence(startOffset, endOffset + 1).toString());
++          }
++
++          setText(text.subSequence(0, endOffset) + mEllipsis);
++        }
++      }
++    }
++    textPaint.setTextSize(targetTextSizePixels);
++    staticLayout =
++        new StaticLayout(this.text, textPaint, textRect.width(), alignment, lineSpacingMultiplier,
++            lineSpacingExtra, true);
++    return this;
++  }
++
++  /**
++   * @return lower text size limit, in pixels.
++   */
++  public float getMinTextSizePixels() {
++    return minTextSizePixels;
++  }
++
++  /**
++   * Sets the text size of a clone of the view's {@link TextPaint} object
++   * and uses a {@link StaticLayout} instance to measure the height of the text.
++   *
++   * @return the height of the text when placed in a view
++   * with the specified width
++   * and when the text has the specified size.
++   */
++  protected int getTextHeightPixels(@NonNull CharSequence source, int availableWidthPixels,
++                                    float textSizePixels) {
++    textPaint.setTextSize(textSizePixels);
++    // It's not efficient to create a StaticLayout instance
++    // every time when measuring, we can use StaticLayout.Builder
++    // since api 23.
++    StaticLayout staticLayout =
++        new StaticLayout(source, textPaint, availableWidthPixels, Layout.Alignment.ALIGN_NORMAL,
++            lineSpacingMultiplier, lineSpacingExtra, true);
++    return staticLayout.getHeight();
++  }
++
++  /**
++   * @return the number of pixels which scaledPixels corresponds to on the device.
++   */
++  private float convertSpToPx(float scaledPixels) {
++    return scaledPixels * context.getResources().getDisplayMetrics().scaledDensity;
++  }
++}
+Index: app/src/main/res/layout/two_two_layout.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/two_two_layout.xml	(revision 3ea6201fd1280928d65f40379b2b3fb5218acdc2)
++++ app/src/main/res/layout/two_two_layout.xml	(date 1621440301428)
+@@ -17,9 +17,56 @@
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintVertical_bias="0.0">
+ 
++        <RelativeLayout
++            android:id="@+id/addtextlayout"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_centerHorizontal="true"
++            android:layout_centerVertical="true"
++            android:visibility="invisible"
++            app:layout_constraintBottom_toBottomOf="parent"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent">
++
++        </RelativeLayout>
++        <com.xiaopo.sticker.StickerView
++            android:id="@+id/sticker_view"
++            android:layout_width="fill_parent"
++            android:layout_height="fill_parent"
++            android:layout_above="@+id/abovelayout"
++            android:layout_below="@+id/mainLayout"
++            android:layout_gravity="center"
++            ads:showBorder="true"
++            ads:showIcons="true" />
+ 
+ 
++        <TextView
++            android:id="@+id/text"
++            android:layout_width="80dp"
++            android:layout_height="29dp"
++            android:text="TEST"
++            app:layout_constraintBottom_toBottomOf="parent"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
+ 
++        <include
++            android:id="@+id/include"
++            layout="@layout/dialog_adding_text"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            app:layout_constraintBottom_toBottomOf="parent"
++            app:layout_constraintEnd_toEndOf="parent"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintTop_toTopOf="parent" />
++
++        <include
++            layout="@layout/dialog_adding_text"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            tools:layout_editor_absoluteX="2dp"
++            tools:layout_editor_absoluteY="324dp" />
+     </androidx.constraintlayout.widget.ConstraintLayout>
+ 
+     <LinearLayout
+Index: app/src/main/res/drawable/rounded_pink.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/rounded_pink.xml	(date 1621264679884)
++++ app/src/main/res/drawable/rounded_pink.xml	(date 1621264679884)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <solid android:color="#FC3C65"/>
++    <stroke android:width="3dp" android:color="#FC3C65" />
++    <corners android:radius="10dp"/>
++    <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
++</shape>
+\ No newline at end of file
+Index: app/src/main/java/com/example/project/sticker/StickerView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/StickerView.java	(date 1621441032062)
++++ app/src/main/java/com/example/project/sticker/StickerView.java	(date 1621441032062)
+@@ -0,0 +1,883 @@
++package com.example.project.sticker;
++
++import android.content.Context;
++import android.content.res.TypedArray;
++import android.graphics.Bitmap;
++import android.graphics.Canvas;
++import android.graphics.Color;
++import android.graphics.Matrix;
++import android.graphics.Paint;
++import android.graphics.PointF;
++import android.graphics.RectF;
++import android.os.SystemClock;
++import android.util.AttributeSet;
++import android.util.Log;
++import android.view.MotionEvent;
++import android.view.ViewConfiguration;
++import android.widget.FrameLayout;
++
++import androidx.annotation.IntDef;
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++import androidx.core.content.ContextCompat;
++import androidx.core.view.MotionEventCompat;
++import androidx.core.view.ViewCompat;
++
++import com.example.project.R;
++
++import java.io.File;
++import java.lang.annotation.Retention;
++import java.lang.annotation.RetentionPolicy;
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.List;
++
++/**
++ * Sticker View
++ * @author wupanjie
++ */
++public class StickerView extends FrameLayout {
++
++  private final boolean showIcons;
++  private final boolean showBorder;
++  private final boolean bringToFrontCurrentSticker;
++
++  @IntDef({
++      ActionMode.NONE, ActionMode.DRAG, ActionMode.ZOOM_WITH_TWO_FINGER, ActionMode.ICON,
++      ActionMode.CLICK
++  }) @Retention(RetentionPolicy.SOURCE) protected @interface ActionMode {
++    int NONE = 0;
++    int DRAG = 1;
++    int ZOOM_WITH_TWO_FINGER = 2;
++    int ICON = 3;
++    int CLICK = 4;
++  }
++
++  @IntDef(flag = true, value = { FLIP_HORIZONTALLY, FLIP_VERTICALLY })
++  @Retention(RetentionPolicy.SOURCE) protected @interface Flip {
++  }
++
++  private static final String TAG = "StickerView";
++
++  private static final int DEFAULT_MIN_CLICK_DELAY_TIME = 200;
++
++  public static final int FLIP_HORIZONTALLY = 1;
++  public static final int FLIP_VERTICALLY = 1 << 1;
++
++  private final List<Sticker> stickers = new ArrayList<>();
++  private final List<BitmapStickerIcon> icons = new ArrayList<>(4);
++
++  private final Paint borderPaint = new Paint();
++  private final RectF stickerRect = new RectF();
++
++  private final Matrix sizeMatrix = new Matrix();
++  private final Matrix downMatrix = new Matrix();
++  private final Matrix moveMatrix = new Matrix();
++
++  // region storing variables
++  private final float[] bitmapPoints = new float[8];
++  private final float[] bounds = new float[8];
++  private final float[] point = new float[2];
++  private final PointF currentCenterPoint = new PointF();
++  private final float[] tmp = new float[2];
++  private PointF midPoint = new PointF();
++  // endregion
++  private final int touchSlop;
++
++  private BitmapStickerIcon currentIcon;
++  //the first point down position
++  private float downX;
++  private float downY;
++
++  private float oldDistance = 0f;
++  private float oldRotation = 0f;
++
++  @ActionMode private int currentMode = ActionMode.NONE;
++
++  private Sticker handlingSticker;
++
++  private boolean locked;
++  private boolean constrained;
++
++  private OnStickerOperationListener onStickerOperationListener;
++
++  private long lastClickTime = 0;
++  private int minClickDelayTime = DEFAULT_MIN_CLICK_DELAY_TIME;
++
++  public StickerView(Context context) {
++    this(context, null);
++  }
++
++  public StickerView(Context context, AttributeSet attrs) {
++    this(context, attrs, 0);
++  }
++
++  public StickerView(Context context, AttributeSet attrs, int defStyleAttr) {
++    super(context, attrs, defStyleAttr);
++    touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
++    TypedArray a = null;
++    try {
++      a = context.obtainStyledAttributes(attrs, R.styleable.StickerView);
++      showIcons = a.getBoolean(R.styleable.StickerView_showIcons, false);
++      showBorder = a.getBoolean(R.styleable.StickerView_showBorder, false);
++      bringToFrontCurrentSticker =
++          a.getBoolean(R.styleable.StickerView_bringToFrontCurrentSticker, false);
++
++      borderPaint.setAntiAlias(true);
++      borderPaint.setColor(a.getColor(R.styleable.StickerView_borderColor, Color.BLACK));
++      borderPaint.setAlpha(a.getInteger(R.styleable.StickerView_borderAlpha, 128));
++
++      configDefaultIcons();
++    } finally {
++      if (a != null) {
++        a.recycle();
++      }
++    }
++  }
++
++  public void configDefaultIcons() {
++    BitmapStickerIcon deleteIcon = new BitmapStickerIcon(
++        ContextCompat.getDrawable(getContext(), R.drawable.sticker_ic_close_white_18dp),
++        BitmapStickerIcon.LEFT_TOP);
++    deleteIcon.setIconEvent(new DeleteIconEvent());
++    BitmapStickerIcon zoomIcon = new BitmapStickerIcon(
++        ContextCompat.getDrawable(getContext(), R.drawable.sticker_ic_scale_white_18dp),
++        BitmapStickerIcon.RIGHT_BOTOM);
++    zoomIcon.setIconEvent(new ZoomIconEvent());
++    BitmapStickerIcon flipIcon = new BitmapStickerIcon(
++        ContextCompat.getDrawable(getContext(), R.drawable.sticker_ic_flip_white_18dp),
++        BitmapStickerIcon.RIGHT_TOP);
++    flipIcon.setIconEvent(new FlipHorizontallyEvent());
++
++    icons.clear();
++    icons.add(deleteIcon);
++    icons.add(zoomIcon);
++    icons.add(flipIcon);
++  }
++
++  /**
++   * Swaps sticker at layer [[oldPos]] with the one at layer [[newPos]].
++   * Does nothing if either of the specified layers doesn't exist.
++   */
++  public void swapLayers(int oldPos, int newPos) {
++    if (stickers.size() >= oldPos && stickers.size() >= newPos) {
++      Collections.swap(stickers, oldPos, newPos);
++      invalidate();
++    }
++  }
++
++  /**
++   * Sends sticker from layer [[oldPos]] to layer [[newPos]].
++   * Does nothing if either of the specified layers doesn't exist.
++   */
++  public void sendToLayer(int oldPos, int newPos) {
++    if (stickers.size() >= oldPos && stickers.size() >= newPos) {
++      Sticker s = stickers.get(oldPos);
++      stickers.remove(oldPos);
++      stickers.add(newPos, s);
++      invalidate();
++    }
++  }
++
++  @Override
++  protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
++    super.onLayout(changed, left, top, right, bottom);
++    if (changed) {
++      stickerRect.left = left;
++      stickerRect.top = top;
++      stickerRect.right = right;
++      stickerRect.bottom = bottom;
++    }
++  }
++
++  @Override
++  protected void dispatchDraw(Canvas canvas) {
++    super.dispatchDraw(canvas);
++    drawStickers(canvas);
++  }
++
++  protected void drawStickers(Canvas canvas) {
++    for (int i = 0; i < stickers.size(); i++) {
++      Sticker sticker = stickers.get(i);
++      if (sticker != null) {
++        sticker.draw(canvas);
++      }
++    }
++
++    if (handlingSticker != null && !locked && (showBorder || showIcons)) {
++
++      getStickerPoints(handlingSticker, bitmapPoints);
++
++      float x1 = bitmapPoints[0];
++      float y1 = bitmapPoints[1];
++      float x2 = bitmapPoints[2];
++      float y2 = bitmapPoints[3];
++      float x3 = bitmapPoints[4];
++      float y3 = bitmapPoints[5];
++      float x4 = bitmapPoints[6];
++      float y4 = bitmapPoints[7];
++
++      if (showBorder) {
++        canvas.drawLine(x1, y1, x2, y2, borderPaint);
++        canvas.drawLine(x1, y1, x3, y3, borderPaint);
++        canvas.drawLine(x2, y2, x4, y4, borderPaint);
++        canvas.drawLine(x4, y4, x3, y3, borderPaint);
++      }
++
++      //draw icons
++      if (showIcons) {
++        float rotation = calculateRotation(x4, y4, x3, y3);
++        for (int i = 0; i < icons.size(); i++) {
++          BitmapStickerIcon icon = icons.get(i);
++          switch (icon.getPosition()) {
++            case BitmapStickerIcon.LEFT_TOP:
++
++              configIconMatrix(icon, x1, y1, rotation);
++              break;
++
++            case BitmapStickerIcon.RIGHT_TOP:
++              configIconMatrix(icon, x2, y2, rotation);
++              break;
++
++            case BitmapStickerIcon.LEFT_BOTTOM:
++              configIconMatrix(icon, x3, y3, rotation);
++              break;
++
++            case BitmapStickerIcon.RIGHT_BOTOM:
++              configIconMatrix(icon, x4, y4, rotation);
++              break;
++          }
++          icon.draw(canvas, borderPaint);
++        }
++      }
++    }
++  }
++
++  protected void configIconMatrix(@NonNull BitmapStickerIcon icon, float x, float y,
++      float rotation) {
++    icon.setX(x);
++    icon.setY(y);
++    icon.getMatrix().reset();
++
++    icon.getMatrix().postRotate(rotation, icon.getWidth() / 2, icon.getHeight() / 2);
++    icon.getMatrix().postTranslate(x - icon.getWidth() / 2, y - icon.getHeight() / 2);
++  }
++
++  @Override
++  public boolean onInterceptTouchEvent(MotionEvent ev) {
++    if (locked) return super.onInterceptTouchEvent(ev);
++
++    switch (ev.getAction()) {
++      case MotionEvent.ACTION_DOWN:
++        downX = ev.getX();
++        downY = ev.getY();
++
++        return findCurrentIconTouched() != null || findHandlingSticker() != null;
++    }
++
++    return super.onInterceptTouchEvent(ev);
++  }
++
++  @Override
++  public boolean onTouchEvent(MotionEvent event) {
++    if (locked) {
++      return super.onTouchEvent(event);
++    }
++
++    int action = MotionEventCompat.getActionMasked(event);
++
++    switch (action) {
++      case MotionEvent.ACTION_DOWN:
++        if (!onTouchDown(event)) {
++          return false;
++        }
++        break;
++      case MotionEvent.ACTION_POINTER_DOWN:
++        oldDistance = calculateDistance(event);
++        oldRotation = calculateRotation(event);
++
++        midPoint = calculateMidPoint(event);
++
++        if (handlingSticker != null && isInStickerArea(handlingSticker, event.getX(1),
++            event.getY(1)) && findCurrentIconTouched() == null) {
++          currentMode = ActionMode.ZOOM_WITH_TWO_FINGER;
++        }
++        break;
++
++      case MotionEvent.ACTION_MOVE:
++        handleCurrentMode(event);
++        invalidate();
++        break;
++
++      case MotionEvent.ACTION_UP:
++        onTouchUp(event);
++        break;
++
++      case MotionEvent.ACTION_POINTER_UP:
++        if (currentMode == ActionMode.ZOOM_WITH_TWO_FINGER && handlingSticker != null) {
++          if (onStickerOperationListener != null) {
++            onStickerOperationListener.onStickerZoomFinished(handlingSticker);
++          }
++        }
++        currentMode = ActionMode.NONE;
++        break;
++    }
++
++    return true;
++  }
++
++  /**
++   * @param event MotionEvent received from {@link #onTouchEvent)
++   * @return true if has touch something
++   */
++  protected boolean onTouchDown(@NonNull MotionEvent event) {
++    currentMode = ActionMode.DRAG;
++
++    downX = event.getX();
++    downY = event.getY();
++
++    midPoint = calculateMidPoint();
++    oldDistance = calculateDistance(midPoint.x, midPoint.y, downX, downY);
++    oldRotation = calculateRotation(midPoint.x, midPoint.y, downX, downY);
++
++    currentIcon = findCurrentIconTouched();
++    if (currentIcon != null) {
++      currentMode = ActionMode.ICON;
++      currentIcon.onActionDown(this, event);
++    } else {
++      handlingSticker = findHandlingSticker();
++    }
++
++    if (handlingSticker != null) {
++      downMatrix.set(handlingSticker.getMatrix());
++      if (bringToFrontCurrentSticker) {
++        stickers.remove(handlingSticker);
++        stickers.add(handlingSticker);
++      }
++      if (onStickerOperationListener != null){
++        onStickerOperationListener.onStickerTouchedDown(handlingSticker);
++      }
++    }
++
++    if (currentIcon == null && handlingSticker == null) {
++      return false;
++    }
++    invalidate();
++    return true;
++  }
++
++  protected void onTouchUp(@NonNull MotionEvent event) {
++    long currentTime = SystemClock.uptimeMillis();
++
++    if (currentMode == ActionMode.ICON && currentIcon != null && handlingSticker != null) {
++      currentIcon.onActionUp(this, event);
++    }
++
++    if (currentMode == ActionMode.DRAG
++        && Math.abs(event.getX() - downX) < touchSlop
++        && Math.abs(event.getY() - downY) < touchSlop
++        && handlingSticker != null) {
++      currentMode = ActionMode.CLICK;
++      if (onStickerOperationListener != null) {
++        onStickerOperationListener.onStickerClicked(handlingSticker);
++      }
++      if (currentTime - lastClickTime < minClickDelayTime) {
++        if (onStickerOperationListener != null) {
++          onStickerOperationListener.onStickerDoubleTapped(handlingSticker);
++        }
++      }
++    }
++
++    if (currentMode == ActionMode.DRAG && handlingSticker != null) {
++      if (onStickerOperationListener != null) {
++        onStickerOperationListener.onStickerDragFinished(handlingSticker);
++      }
++    }
++
++    currentMode = ActionMode.NONE;
++    lastClickTime = currentTime;
++  }
++
++  protected void handleCurrentMode(@NonNull MotionEvent event) {
++    switch (currentMode) {
++      case ActionMode.NONE:
++      case ActionMode.CLICK:
++        break;
++      case ActionMode.DRAG:
++        if (handlingSticker != null) {
++          moveMatrix.set(downMatrix);
++          moveMatrix.postTranslate(event.getX() - downX, event.getY() - downY);
++          handlingSticker.setMatrix(moveMatrix);
++          if (constrained) {
++            constrainSticker(handlingSticker);
++          }
++        }
++        break;
++      case ActionMode.ZOOM_WITH_TWO_FINGER:
++        if (handlingSticker != null) {
++          float newDistance = calculateDistance(event);
++          float newRotation = calculateRotation(event);
++
++          moveMatrix.set(downMatrix);
++          moveMatrix.postScale(newDistance / oldDistance, newDistance / oldDistance, midPoint.x,
++              midPoint.y);
++          moveMatrix.postRotate(newRotation - oldRotation, midPoint.x, midPoint.y);
++          handlingSticker.setMatrix(moveMatrix);
++        }
++
++        break;
++
++      case ActionMode.ICON:
++        if (handlingSticker != null && currentIcon != null) {
++          currentIcon.onActionMove(this, event);
++        }
++        break;
++    }
++  }
++
++  public void zoomAndRotateCurrentSticker(@NonNull MotionEvent event) {
++    zoomAndRotateSticker(handlingSticker, event);
++  }
++
++  public void zoomAndRotateSticker(@Nullable Sticker sticker, @NonNull MotionEvent event) {
++    if (sticker != null) {
++      float newDistance = calculateDistance(midPoint.x, midPoint.y, event.getX(), event.getY());
++      float newRotation = calculateRotation(midPoint.x, midPoint.y, event.getX(), event.getY());
++
++      moveMatrix.set(downMatrix);
++      moveMatrix.postScale(newDistance / oldDistance, newDistance / oldDistance, midPoint.x,
++          midPoint.y);
++      moveMatrix.postRotate(newRotation - oldRotation, midPoint.x, midPoint.y);
++      handlingSticker.setMatrix(moveMatrix);
++    }
++  }
++
++  protected void constrainSticker(@NonNull Sticker sticker) {
++    float moveX = 0;
++    float moveY = 0;
++    int width = getWidth();
++    int height = getHeight();
++    sticker.getMappedCenterPoint(currentCenterPoint, point, tmp);
++    if (currentCenterPoint.x < 0) {
++      moveX = -currentCenterPoint.x;
++    }
++
++    if (currentCenterPoint.x > width) {
++      moveX = width - currentCenterPoint.x;
++    }
++
++    if (currentCenterPoint.y < 0) {
++      moveY = -currentCenterPoint.y;
++    }
++
++    if (currentCenterPoint.y > height) {
++      moveY = height - currentCenterPoint.y;
++    }
++
++    sticker.getMatrix().postTranslate(moveX, moveY);
++  }
++
++  @Nullable protected BitmapStickerIcon findCurrentIconTouched() {
++    for (BitmapStickerIcon icon : icons) {
++      float x = icon.getX() - downX;
++      float y = icon.getY() - downY;
++      float distance_pow_2 = x * x + y * y;
++      if (distance_pow_2 <= Math.pow(icon.getIconRadius() + icon.getIconRadius(), 2)) {
++        return icon;
++      }
++    }
++
++    return null;
++  }
++
++  /**
++   * find the touched Sticker
++   **/
++  @Nullable protected Sticker findHandlingSticker() {
++    for (int i = stickers.size() - 1; i >= 0; i--) {
++      if (isInStickerArea(stickers.get(i), downX, downY)) {
++        return stickers.get(i);
++      }
++    }
++    return null;
++  }
++
++  protected boolean isInStickerArea(@NonNull Sticker sticker, float downX, float downY) {
++    tmp[0] = downX;
++    tmp[1] = downY;
++    return sticker.contains(tmp);
++  }
++
++  @NonNull protected PointF calculateMidPoint(@Nullable MotionEvent event) {
++    if (event == null || event.getPointerCount() < 2) {
++      midPoint.set(0, 0);
++      return midPoint;
++    }
++    float x = (event.getX(0) + event.getX(1)) / 2;
++    float y = (event.getY(0) + event.getY(1)) / 2;
++    midPoint.set(x, y);
++    return midPoint;
++  }
++
++  @NonNull protected PointF calculateMidPoint() {
++    if (handlingSticker == null) {
++      midPoint.set(0, 0);
++      return midPoint;
++    }
++    handlingSticker.getMappedCenterPoint(midPoint, point, tmp);
++    return midPoint;
++  }
++
++  /**
++   * calculate rotation in line with two fingers and x-axis
++   **/
++  protected float calculateRotation(@Nullable MotionEvent event) {
++    if (event == null || event.getPointerCount() < 2) {
++      return 0f;
++    }
++    return calculateRotation(event.getX(0), event.getY(0), event.getX(1), event.getY(1));
++  }
++
++  protected float calculateRotation(float x1, float y1, float x2, float y2) {
++    double x = x1 - x2;
++    double y = y1 - y2;
++    double radians = Math.atan2(y, x);
++    return (float) Math.toDegrees(radians);
++  }
++
++  /**
++   * calculate Distance in two fingers
++   **/
++  protected float calculateDistance(@Nullable MotionEvent event) {
++    if (event == null || event.getPointerCount() < 2) {
++      return 0f;
++    }
++    return calculateDistance(event.getX(0), event.getY(0), event.getX(1), event.getY(1));
++  }
++
++  protected float calculateDistance(float x1, float y1, float x2, float y2) {
++    double x = x1 - x2;
++    double y = y1 - y2;
++
++    return (float) Math.sqrt(x * x + y * y);
++  }
++
++  @Override
++  protected void onSizeChanged(int w, int h, int oldW, int oldH) {
++    super.onSizeChanged(w, h, oldW, oldH);
++    for (int i = 0; i < stickers.size(); i++) {
++      Sticker sticker = stickers.get(i);
++      if (sticker != null) {
++        transformSticker(sticker);
++      }
++    }
++  }
++
++  /**
++   * Sticker's drawable will be too bigger or smaller
++   * This method is to transform it to fit
++   * step 1：let the center of the sticker image is coincident with the center of the View.
++   * step 2：Calculate the zoom and zoom
++   **/
++  protected void transformSticker(@Nullable Sticker sticker) {
++    if (sticker == null) {
++      Log.e(TAG, "transformSticker: the bitmapSticker is null or the bitmapSticker bitmap is null");
++      return;
++    }
++
++    sizeMatrix.reset();
++
++    float width = getWidth();
++    float height = getHeight();
++    float stickerWidth = sticker.getWidth();
++    float stickerHeight = sticker.getHeight();
++    //step 1
++    float offsetX = (width - stickerWidth) / 2;
++    float offsetY = (height - stickerHeight) / 2;
++
++    sizeMatrix.postTranslate(offsetX, offsetY);
++
++    //step 2
++    float scaleFactor;
++    if (width < height) {
++      scaleFactor = width / stickerWidth;
++    } else {
++      scaleFactor = height / stickerHeight;
++    }
++
++    sizeMatrix.postScale(scaleFactor / 2f, scaleFactor / 2f, width / 2f, height / 2f);
++
++    sticker.getMatrix().reset();
++    sticker.setMatrix(sizeMatrix);
++
++    invalidate();
++  }
++
++  public void flipCurrentSticker(int direction) {
++    flip(handlingSticker, direction);
++  }
++
++  public void flip(@Nullable Sticker sticker, @Flip int direction) {
++    if (sticker != null) {
++      sticker.getCenterPoint(midPoint);
++      if ((direction & FLIP_HORIZONTALLY) > 0) {
++        sticker.getMatrix().preScale(-1, 1, midPoint.x, midPoint.y);
++        sticker.setFlippedHorizontally(!sticker.isFlippedHorizontally());
++      }
++      if ((direction & FLIP_VERTICALLY) > 0) {
++        sticker.getMatrix().preScale(1, -1, midPoint.x, midPoint.y);
++        sticker.setFlippedVertically(!sticker.isFlippedVertically());
++      }
++
++      if (onStickerOperationListener != null) {
++        onStickerOperationListener.onStickerFlipped(sticker);
++      }
++
++      invalidate();
++    }
++  }
++
++  public boolean replace(@Nullable Sticker sticker) {
++    return replace(sticker, true);
++  }
++
++  public boolean replace(@Nullable Sticker sticker, boolean needStayState) {
++    if (handlingSticker != null && sticker != null) {
++      float width = getWidth();
++      float height = getHeight();
++      if (needStayState) {
++        sticker.setMatrix(handlingSticker.getMatrix());
++        sticker.setFlippedVertically(handlingSticker.isFlippedVertically());
++        sticker.setFlippedHorizontally(handlingSticker.isFlippedHorizontally());
++      } else {
++        handlingSticker.getMatrix().reset();
++        // reset scale, angle, and put it in center
++        float offsetX = (width - handlingSticker.getWidth()) / 2f;
++        float offsetY = (height - handlingSticker.getHeight()) / 2f;
++        sticker.getMatrix().postTranslate(offsetX, offsetY);
++
++        float scaleFactor;
++        if (width < height) {
++          scaleFactor = width / handlingSticker.getDrawable().getIntrinsicWidth();
++        } else {
++          scaleFactor = height / handlingSticker.getDrawable().getIntrinsicHeight();
++        }
++        sticker.getMatrix().postScale(scaleFactor / 2f, scaleFactor / 2f, width / 2f, height / 2f);
++      }
++      int index = stickers.indexOf(handlingSticker);
++      stickers.set(index, sticker);
++      handlingSticker = sticker;
++
++      invalidate();
++      return true;
++    } else {
++      return false;
++    }
++  }
++
++  public boolean remove(@Nullable Sticker sticker) {
++    if (stickers.contains(sticker)) {
++      stickers.remove(sticker);
++      if (onStickerOperationListener != null) {
++        onStickerOperationListener.onStickerDeleted(sticker);
++      }
++      if (handlingSticker == sticker) {
++        handlingSticker = null;
++      }
++      invalidate();
++
++      return true;
++    } else {
++      Log.d(TAG, "remove: the sticker is not in this StickerView");
++
++      return false;
++    }
++  }
++
++  public boolean removeCurrentSticker() {
++    return remove(handlingSticker);
++  }
++
++  public void removeAllStickers() {
++    stickers.clear();
++    if (handlingSticker != null) {
++      handlingSticker.release();
++      handlingSticker = null;
++    }
++    invalidate();
++  }
++
++  @NonNull public com.xiaopo.sticker.StickerView addSticker(@NonNull Sticker sticker) {
++    return addSticker(sticker, Sticker.Position.CENTER);
++  }
++
++  public com.xiaopo.sticker.StickerView addSticker(@NonNull final Sticker sticker,
++                                                   final @Sticker.Position int position) {
++    if (ViewCompat.isLaidOut(this)) {
++      addStickerImmediately(sticker, position);
++    } else {
++      post(new Runnable() {
++        @Override
++        public void run() {
++          addStickerImmediately(sticker, position);
++        }
++      });
++    }
++    return this;
++  }
++
++  protected void addStickerImmediately(@NonNull Sticker sticker, @Sticker.Position int position) {
++    setStickerPosition(sticker, position);
++
++
++    float scaleFactor, widthScaleFactor, heightScaleFactor;
++
++    widthScaleFactor = (float) getWidth() / sticker.getDrawable().getIntrinsicWidth();
++    heightScaleFactor = (float) getHeight() / sticker.getDrawable().getIntrinsicHeight();
++    scaleFactor = widthScaleFactor > heightScaleFactor ? heightScaleFactor : widthScaleFactor;
++
++    sticker.getMatrix()
++        .postScale(scaleFactor / 2, scaleFactor / 2, getWidth() / 2, getHeight() / 2);
++
++    handlingSticker = sticker;
++    stickers.add(sticker);
++    if (onStickerOperationListener != null) {
++      onStickerOperationListener.onStickerAdded(sticker);
++    }
++    invalidate();
++  }
++
++  protected void setStickerPosition(@NonNull Sticker sticker, @Sticker.Position int position) {
++    float width = getWidth();
++    float height = getHeight();
++    float offsetX = width - sticker.getWidth();
++    float offsetY = height - sticker.getHeight();
++    if ((position & Sticker.Position.TOP) > 0) {
++      offsetY /= 4f;
++    } else if ((position & Sticker.Position.BOTTOM) > 0) {
++      offsetY *= 3f / 4f;
++    } else {
++      offsetY /= 2f;
++    }
++    if ((position & Sticker.Position.LEFT) > 0) {
++      offsetX /= 4f;
++    } else if ((position & Sticker.Position.RIGHT) > 0) {
++      offsetX *= 3f / 4f;
++    } else {
++      offsetX /= 2f;
++    }
++    sticker.getMatrix().postTranslate(offsetX, offsetY);
++  }
++
++  @NonNull public float[] getStickerPoints(@Nullable Sticker sticker) {
++    float[] points = new float[8];
++    getStickerPoints(sticker, points);
++    return points;
++  }
++
++  public void getStickerPoints(@Nullable Sticker sticker, @NonNull float[] dst) {
++    if (sticker == null) {
++      Arrays.fill(dst, 0);
++      return;
++    }
++    sticker.getBoundPoints(bounds);
++    sticker.getMappedPoints(dst, bounds);
++  }
++
++  public void save(@NonNull File file) {
++    try {
++      StickerUtils.saveImageToGallery(file, createBitmap());
++      StickerUtils.notifySystemGallery(getContext(), file);
++    } catch (IllegalArgumentException | IllegalStateException ignored) {
++      //
++    }
++  }
++
++  @NonNull public Bitmap createBitmap() throws OutOfMemoryError {
++    handlingSticker = null;
++    Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
++    Canvas canvas = new Canvas(bitmap);
++    this.draw(canvas);
++    return bitmap;
++  }
++
++  public int getStickerCount() {
++    return stickers.size();
++  }
++
++  public boolean isNoneSticker() {
++    return getStickerCount() == 0;
++  }
++
++  public boolean isLocked() {
++    return locked;
++  }
++
++  @NonNull public com.xiaopo.sticker.StickerView setLocked(boolean locked) {
++    this.locked = locked;
++    invalidate();
++    return this;
++  }
++
++  @NonNull public com.xiaopo.sticker.StickerView setMinClickDelayTime(int minClickDelayTime) {
++    this.minClickDelayTime = minClickDelayTime;
++    return this;
++  }
++
++  public int getMinClickDelayTime() {
++    return minClickDelayTime;
++  }
++
++  public boolean isConstrained() {
++    return constrained;
++  }
++
++  @NonNull public com.xiaopo.sticker.StickerView setConstrained(boolean constrained) {
++    this.constrained = constrained;
++    postInvalidate();
++    return this;
++  }
++
++  @NonNull public com.xiaopo.sticker.StickerView setOnStickerOperationListener(
++      @Nullable OnStickerOperationListener onStickerOperationListener) {
++    this.onStickerOperationListener = onStickerOperationListener;
++    return this;
++  }
++
++  @Nullable public OnStickerOperationListener getOnStickerOperationListener() {
++    return onStickerOperationListener;
++  }
++
++  @Nullable public Sticker getCurrentSticker() {
++    return handlingSticker;
++  }
++
++  @NonNull public List<BitmapStickerIcon> getIcons() {
++    return icons;
++  }
++
++  public void setIcons(@NonNull List<BitmapStickerIcon> icons) {
++    this.icons.clear();
++    this.icons.addAll(icons);
++    invalidate();
++  }
++
++  public interface OnStickerOperationListener {
++    void onStickerAdded(@NonNull Sticker sticker);
++
++    void onStickerClicked(@NonNull Sticker sticker);
++
++    void onStickerDeleted(@NonNull Sticker sticker);
++
++    void onStickerDragFinished(@NonNull Sticker sticker);
++
++    void onStickerTouchedDown(@NonNull Sticker sticker);
++
++    void onStickerZoomFinished(@NonNull Sticker sticker);
++
++    void onStickerFlipped(@NonNull Sticker sticker);
++
++    void onStickerDoubleTapped(@NonNull Sticker sticker);
++  }
++}
+Index: app/src/main/java/com/example/project/sticker/Sticker.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/Sticker.java	(date 1621441032073)
++++ app/src/main/java/com/example/project/sticker/Sticker.java	(date 1621441032073)
+@@ -0,0 +1,249 @@
++package com.example.project.sticker;
++
++import android.graphics.Canvas;
++import android.graphics.Matrix;
++import android.graphics.PointF;
++import android.graphics.RectF;
++import android.graphics.drawable.Drawable;
++
++import androidx.annotation.IntDef;
++import androidx.annotation.IntRange;
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++
++import java.lang.annotation.Retention;
++import java.lang.annotation.RetentionPolicy;
++
++/**
++ * @author wupanjie
++ */
++public abstract class Sticker {
++
++  @IntDef(flag = true, value = {
++      Position.CENTER, Position.TOP, Position.BOTTOM, Position.LEFT, Position.RIGHT
++  }) @Retention(RetentionPolicy.SOURCE) public @interface Position {
++    int CENTER = 1;
++    int TOP = 1 << 1;
++    int LEFT = 1 << 2;
++    int RIGHT = 1 << 3;
++    int BOTTOM = 1 << 4;
++  }
++
++  private final float[] matrixValues = new float[9];
++  private final float[] unrotatedWrapperCorner = new float[8];
++  private final float[] unrotatedPoint = new float[2];
++  private final float[] boundPoints = new float[8];
++  private final float[] mappedBounds = new float[8];
++  private final RectF trappedRect = new RectF();
++  private final Matrix matrix = new Matrix();
++  private boolean isFlippedHorizontally;
++  private boolean isFlippedVertically;
++
++  public boolean isFlippedHorizontally() {
++    return isFlippedHorizontally;
++  }
++
++  @NonNull public com.xiaopo.sticker.Sticker setFlippedHorizontally(boolean flippedHorizontally) {
++    isFlippedHorizontally = flippedHorizontally;
++    return this;
++  }
++
++  public boolean isFlippedVertically() {
++    return isFlippedVertically;
++  }
++
++  @NonNull public com.xiaopo.sticker.Sticker setFlippedVertically(boolean flippedVertically) {
++    isFlippedVertically = flippedVertically;
++    return this;
++  }
++
++  @NonNull public Matrix getMatrix() {
++    return matrix;
++  }
++
++  public com.xiaopo.sticker.Sticker setMatrix(@Nullable Matrix matrix) {
++    this.matrix.set(matrix);
++    return this;
++  }
++
++  public abstract void draw(@NonNull Canvas canvas);
++
++  public abstract int getWidth();
++
++  public abstract int getHeight();
++
++  public abstract com.xiaopo.sticker.Sticker setDrawable(@NonNull Drawable drawable);
++
++  @NonNull public abstract Drawable getDrawable();
++
++  @NonNull public abstract com.xiaopo.sticker.Sticker setAlpha(@IntRange(from = 0, to = 255) int alpha);
++
++  public float[] getBoundPoints() {
++    float[] points = new float[8];
++    getBoundPoints(points);
++    return points;
++  }
++
++  public void getBoundPoints(@NonNull float[] points) {
++    if (!isFlippedHorizontally) {
++      if (!isFlippedVertically) {
++        points[0] = 0f;
++        points[1] = 0f;
++        points[2] = getWidth();
++        points[3] = 0f;
++        points[4] = 0f;
++        points[5] = getHeight();
++        points[6] = getWidth();
++        points[7] = getHeight();
++      } else {
++        points[0] = 0f;
++        points[1] = getHeight();
++        points[2] = getWidth();
++        points[3] = getHeight();
++        points[4] = 0f;
++        points[5] = 0f;
++        points[6] = getWidth();
++        points[7] = 0f;
++      }
++    } else {
++      if (!isFlippedVertically) {
++        points[0] = getWidth();
++        points[1] = 0f;
++        points[2] = 0f;
++        points[3] = 0f;
++        points[4] = getWidth();
++        points[5] = getHeight();
++        points[6] = 0f;
++        points[7] = getHeight();
++      } else {
++        points[0] = getWidth();
++        points[1] = getHeight();
++        points[2] = 0f;
++        points[3] = getHeight();
++        points[4] = getWidth();
++        points[5] = 0f;
++        points[6] = 0f;
++        points[7] = 0f;
++      }
++    }
++  }
++
++  @NonNull public float[] getMappedBoundPoints() {
++    float[] dst = new float[8];
++    getMappedPoints(dst, getBoundPoints());
++    return dst;
++  }
++
++  @NonNull public float[] getMappedPoints(@NonNull float[] src) {
++    float[] dst = new float[src.length];
++    matrix.mapPoints(dst, src);
++    return dst;
++  }
++
++  public void getMappedPoints(@NonNull float[] dst, @NonNull float[] src) {
++    matrix.mapPoints(dst, src);
++  }
++
++  @NonNull public RectF getBound() {
++    RectF bound = new RectF();
++    getBound(bound);
++    return bound;
++  }
++
++  public void getBound(@NonNull RectF dst) {
++    dst.set(0, 0, getWidth(), getHeight());
++  }
++
++  @NonNull public RectF getMappedBound() {
++    RectF dst = new RectF();
++    getMappedBound(dst, getBound());
++    return dst;
++  }
++
++  public void getMappedBound(@NonNull RectF dst, @NonNull RectF bound) {
++    matrix.mapRect(dst, bound);
++  }
++
++  @NonNull public PointF getCenterPoint() {
++    PointF center = new PointF();
++    getCenterPoint(center);
++    return center;
++  }
++
++  public void getCenterPoint(@NonNull PointF dst) {
++    dst.set(getWidth() * 1f / 2, getHeight() * 1f / 2);
++  }
++
++  @NonNull public PointF getMappedCenterPoint() {
++    PointF pointF = getCenterPoint();
++    getMappedCenterPoint(pointF, new float[2], new float[2]);
++    return pointF;
++  }
++
++  public void getMappedCenterPoint(@NonNull PointF dst, @NonNull float[] mappedPoints,
++                                   @NonNull float[] src) {
++    getCenterPoint(dst);
++    src[0] = dst.x;
++    src[1] = dst.y;
++    getMappedPoints(mappedPoints, src);
++    dst.set(mappedPoints[0], mappedPoints[1]);
++  }
++
++  public float getCurrentScale() {
++    return getMatrixScale(matrix);
++  }
++
++  public float getCurrentHeight() {
++    return getMatrixScale(matrix) * getHeight();
++  }
++
++  public float getCurrentWidth() {
++    return getMatrixScale(matrix) * getWidth();
++  }
++
++  /**
++   * This method calculates scale value for given Matrix object.
++   */
++  public float getMatrixScale(@NonNull Matrix matrix) {
++    return (float) Math.sqrt(Math.pow(getMatrixValue(matrix, Matrix.MSCALE_X), 2) + Math.pow(
++        getMatrixValue(matrix, Matrix.MSKEW_Y), 2));
++  }
++
++  /**
++   * @return - current image rotation angle.
++   */
++  public float getCurrentAngle() {
++    return getMatrixAngle(matrix);
++  }
++
++  /**
++   * This method calculates rotation angle for given Matrix object.
++   */
++  public float getMatrixAngle(@NonNull Matrix matrix) {
++    return (float) Math.toDegrees(-(Math.atan2(getMatrixValue(matrix, Matrix.MSKEW_X),
++        getMatrixValue(matrix, Matrix.MSCALE_X))));
++  }
++
++  public float getMatrixValue(@NonNull Matrix matrix, @IntRange(from = 0, to = 9) int valueIndex) {
++    matrix.getValues(matrixValues);
++    return matrixValues[valueIndex];
++  }
++
++  public boolean contains(float x, float y) {
++    return contains(new float[] { x, y });
++  }
++
++  public boolean contains(@NonNull float[] point) {
++    Matrix tempMatrix = new Matrix();
++    tempMatrix.setRotate(-getCurrentAngle());
++    getBoundPoints(boundPoints);
++    getMappedPoints(mappedBounds, boundPoints);
++    tempMatrix.mapPoints(unrotatedWrapperCorner, mappedBounds);
++    tempMatrix.mapPoints(unrotatedPoint, point);
++    StickerUtils.trapToRect(trappedRect, unrotatedWrapperCorner);
++    return trappedRect.contains(unrotatedPoint[0], unrotatedPoint[1]);
++  }
++
++  public void release() {
++  }
++}
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision 3ea6201fd1280928d65f40379b2b3fb5218acdc2)
++++ app/src/main/res/values/colors.xml	(date 1621440301443)
+@@ -4,4 +4,5 @@
+     <color name="colorPrimaryDark">#3700B3</color>
+     <color name="colorAccent">#03DAC5</color>
+     <color name="grey">#DCDCDC</color>
++    <color name="black">#000000</color>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/com/example/project/sticker/FlipHorizontallyEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/FlipHorizontallyEvent.java	(date 1621441032025)
++++ app/src/main/java/com/example/project/sticker/FlipHorizontallyEvent.java	(date 1621441032025)
+@@ -0,0 +1,13 @@
++package com.example.project.sticker;
++
++/**
++ * @author wupanjie
++ */
++
++public class FlipHorizontallyEvent extends AbstractFlipEvent {
++
++  @Override
++  @StickerView.Flip protected int getFlipDirection() {
++    return StickerView.FLIP_HORIZONTALLY;
++  }
++}
+Index: app/src/main/res/layout/dialog_adding_text.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/dialog_adding_text.xml	(date 1621440301459)
++++ app/src/main/res/layout/dialog_adding_text.xml	(date 1621440301459)
+@@ -0,0 +1,48 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="fill_parent"
++    android:layout_height="wrap_content">
++
++    <RelativeLayout
++        android:layout_marginRight="12dp"
++        android:layout_marginLeft="12dp"
++        android:layout_width="fill_parent"
++        android:layout_height="156dp"
++        android:background="@drawable/popup">
++
++        <EditText
++            android:layout_marginTop="18.00dp"
++            android:layout_marginRight="24.00dp"
++            android:layout_marginLeft="24.00dp"
++            android:id="@+id/textarea"
++            android:layout_width="fill_parent"
++            android:layout_height="50.00dp"
++            android:hint="Enter your text here" />
++
++        <LinearLayout
++            android:layout_marginTop="24.00dp"
++            android:layout_below="@+id/textarea"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:gravity="center"
++            android:orientation="horizontal">
++
++            <Button
++                android:id="@+id/add"
++                android:layout_width="106dp"
++                android:layout_height="38.00dp"
++                android:background="@drawable/rounded_yellow"
++                android:text="@string/add"
++                android:textColor="@color/black" />
++
++            <Button
++                android:layout_marginLeft="24.00dp"
++                android:id="@+id/cancel"
++                android:layout_width="106dp"
++                android:layout_height="38.00dp"
++                android:background="@drawable/rounded_pink"
++                android:text="@string/cancel"
++                android:textColor="@color/black" />
++        </LinearLayout>
++    </RelativeLayout>
++</RelativeLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/project/sticker/FlipBothDirectionsEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/FlipBothDirectionsEvent.java	(date 1621441032098)
++++ app/src/main/java/com/example/project/sticker/FlipBothDirectionsEvent.java	(date 1621441032098)
+@@ -0,0 +1,13 @@
++package com.example.project.sticker;
++
++/**
++ * @author wupanjie
++ */
++
++public class FlipBothDirectionsEvent extends AbstractFlipEvent {
++
++  @Override
++  @StickerView.Flip protected int getFlipDirection() {
++    return StickerView.FLIP_VERTICALLY | StickerView.FLIP_HORIZONTALLY;
++  }
++}
+Index: app/src/main/java/com/example/project/sticker/BitmapStickerIcon.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/BitmapStickerIcon.java	(date 1621441032047)
++++ app/src/main/java/com/example/project/sticker/BitmapStickerIcon.java	(date 1621441032047)
+@@ -0,0 +1,116 @@
++package com.example.project.sticker;
++
++import android.graphics.Canvas;
++import android.graphics.Paint;
++import android.graphics.drawable.Drawable;
++import android.view.MotionEvent;
++
++import androidx.annotation.IntDef;
++
++import java.lang.annotation.Retention;
++import java.lang.annotation.RetentionPolicy;
++
++/**
++ * @author wupanjie
++ */
++public class BitmapStickerIcon extends DrawableSticker implements StickerIconEvent {
++  public static final float DEFAULT_ICON_RADIUS = 30f;
++  public static final float DEFAULT_ICON_EXTRA_RADIUS = 10f;
++
++  @IntDef({ LEFT_TOP, RIGHT_TOP, LEFT_BOTTOM, RIGHT_BOTOM }) @Retention(RetentionPolicy.SOURCE)
++  public @interface Gravity {
++
++  }
++
++  public static final int LEFT_TOP = 0;
++  public static final int RIGHT_TOP = 1;
++  public static final int LEFT_BOTTOM = 2;
++  public static final int RIGHT_BOTOM = 3;
++
++  private float iconRadius = DEFAULT_ICON_RADIUS;
++  private float iconExtraRadius = DEFAULT_ICON_EXTRA_RADIUS;
++  private float x;
++  private float y;
++  @Gravity private int position = LEFT_TOP;
++
++  private StickerIconEvent iconEvent;
++
++  public BitmapStickerIcon(Drawable drawable, @Gravity int gravity) {
++    super(drawable);
++    this.position = gravity;
++  }
++
++  public void draw(Canvas canvas, Paint paint) {
++    canvas.drawCircle(x, y, iconRadius, paint);
++    super.draw(canvas);
++  }
++
++  public float getX() {
++    return x;
++  }
++
++  public void setX(float x) {
++    this.x = x;
++  }
++
++  public float getY() {
++    return y;
++  }
++
++  public void setY(float y) {
++    this.y = y;
++  }
++
++  public float getIconRadius() {
++    return iconRadius;
++  }
++
++  public void setIconRadius(float iconRadius) {
++    this.iconRadius = iconRadius;
++  }
++
++  public float getIconExtraRadius() {
++    return iconExtraRadius;
++  }
++
++  public void setIconExtraRadius(float iconExtraRadius) {
++    this.iconExtraRadius = iconExtraRadius;
++  }
++
++  @Override
++  public void onActionDown(StickerView stickerView, MotionEvent event) {
++    if (iconEvent != null) {
++      iconEvent.onActionDown(stickerView, event);
++    }
++  }
++
++  @Override
++  public void onActionMove(StickerView stickerView, MotionEvent event) {
++    if (iconEvent != null) {
++      iconEvent.onActionMove(stickerView, event);
++    }
++  }
++
++  @Override
++  public void onActionUp(StickerView stickerView, MotionEvent event) {
++    if (iconEvent != null) {
++      iconEvent.onActionUp(stickerView, event);
++    }
++  }
++
++  public StickerIconEvent getIconEvent() {
++    return iconEvent;
++  }
++
++  public void setIconEvent(StickerIconEvent iconEvent) {
++    this.iconEvent = iconEvent;
++  }
++
++  @Gravity public int getPosition() {
++    return position;
++  }
++
++  public void setPosition(@Gravity int position) {
++    this.position = position;
++  }
++}
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision 3ea6201fd1280928d65f40379b2b3fb5218acdc2)
++++ app/src/main/res/values/strings.xml	(date 1621440301443)
+@@ -14,4 +14,6 @@
+     <color name="indigo">#4B0082</color>
+     <!-- TODO: Remove or change this placeholder text -->
+     <string name="hello_blank_fragment">Hello blank fragment</string>
++    <string name="cancel">Cancel</string>
++    <string name="add">Add</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/com/example/project/sticker/DrawableSticker.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/DrawableSticker.java	(date 1621441032055)
++++ app/src/main/java/com/example/project/sticker/DrawableSticker.java	(date 1621441032055)
+@@ -0,0 +1,66 @@
++package com.example.project.sticker;
++
++import android.graphics.Canvas;
++import android.graphics.Rect;
++import android.graphics.drawable.Drawable;
++
++import androidx.annotation.IntRange;
++import androidx.annotation.NonNull;
++
++/**
++ * @author wupanjie
++ */
++public class DrawableSticker extends com.xiaopo.sticker.Sticker {
++
++  private Drawable drawable;
++  private Rect realBounds;
++
++  public DrawableSticker(Drawable drawable) {
++    this.drawable = drawable;
++    realBounds = new Rect(0, 0, getWidth(), getHeight());
++  }
++
++  @NonNull @Override
++  public Drawable getDrawable() {
++    return drawable;
++  }
++
++  @Override
++  public com.xiaopo.sticker.DrawableSticker setDrawable(@NonNull Drawable drawable) {
++    this.drawable = drawable;
++    return this;
++  }
++
++  @Override
++  public void draw(@NonNull Canvas canvas) {
++    canvas.save();
++    canvas.concat(getMatrix());
++    drawable.setBounds(realBounds);
++    drawable.draw(canvas);
++    canvas.restore();
++  }
++
++  @NonNull @Override
++  public com.xiaopo.sticker.DrawableSticker setAlpha(@IntRange(from = 0, to = 255) int alpha) {
++    drawable.setAlpha(alpha);
++    return this;
++  }
++
++  @Override
++  public int getWidth() {
++    return drawable.getIntrinsicWidth();
++  }
++
++  @Override
++  public int getHeight() {
++    return drawable.getIntrinsicHeight();
++  }
++
++  @Override
++  public void release() {
++    super.release();
++    if (drawable != null) {
++      drawable = null;
++    }
++  }
++}
+Index: app/src/main/java/com/example/project/sticker/StickerUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/StickerUtils.java	(date 1621441032119)
++++ app/src/main/java/com/example/project/sticker/StickerUtils.java	(date 1621441032119)
+@@ -0,0 +1,76 @@
++package com.example.project.sticker;
++
++import android.content.Context;
++import android.content.Intent;
++import android.graphics.Bitmap;
++import android.graphics.RectF;
++import android.net.Uri;
++import android.provider.MediaStore;
++import android.util.Log;
++
++import androidx.annotation.NonNull;
++
++import java.io.File;
++import java.io.FileNotFoundException;
++import java.io.FileOutputStream;
++import java.io.IOException;
++
++import static java.lang.Math.round;
++
++/**
++ * @author wupanjie
++ */
++class StickerUtils {
++  private static final String TAG = "StickerView";
++
++  public static File saveImageToGallery(@NonNull File file, @NonNull Bitmap bmp) {
++    if (bmp == null) {
++      throw new IllegalArgumentException("bmp should not be null");
++    }
++    try {
++      FileOutputStream fos = new FileOutputStream(file);
++      bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
++      fos.flush();
++      fos.close();
++    } catch (IOException e) {
++      e.printStackTrace();
++    }
++
++    Log.e(TAG, "saveImageToGallery: the path of bmp is " + file.getAbsolutePath());
++    return file;
++  }
++
++  public static void notifySystemGallery(@NonNull Context context, @NonNull File file) {
++    if (file == null || !file.exists()) {
++      throw new IllegalArgumentException("bmp should not be null");
++    }
++
++    try {
++      MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(),
++          file.getName(), null);
++    } catch (FileNotFoundException e) {
++      throw new IllegalStateException("File couldn't be found");
++    }
++    context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
++  }
++
++  @NonNull public static RectF trapToRect(@NonNull float[] array) {
++    RectF r = new RectF();
++    trapToRect(r, array);
++    return r;
++  }
++
++  public static void trapToRect(@NonNull RectF r, @NonNull float[] array) {
++    r.set(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Float.NEGATIVE_INFINITY,
++        Float.NEGATIVE_INFINITY);
++    for (int i = 1; i < array.length; i += 2) {
++      float x = round(array[i - 1] * 10) / 10.f;
++      float y = round(array[i] * 10) / 10.f;
++      r.left = (x < r.left) ? x : r.left;
++      r.top = (y < r.top) ? y : r.top;
++      r.right = (x > r.right) ? x : r.right;
++      r.bottom = (y > r.bottom) ? y : r.bottom;
++    }
++    r.sort();
++  }
++}
+Index: app/src/main/java/com/example/project/sticker/FlipVerticallyEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/FlipVerticallyEvent.java	(date 1621441032128)
++++ app/src/main/java/com/example/project/sticker/FlipVerticallyEvent.java	(date 1621441032128)
+@@ -0,0 +1,13 @@
++package com.example.project.sticker;
++
++/**
++ * @author wupanjie
++ */
++
++public class FlipVerticallyEvent extends AbstractFlipEvent {
++
++  @Override
++  @StickerView.Flip protected int getFlipDirection() {
++    return StickerView.FLIP_VERTICALLY;
++  }
++}
+Index: app/src/main/java/com/example/project/sticker/DeleteIconEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/DeleteIconEvent.java	(date 1621441032082)
++++ app/src/main/java/com/example/project/sticker/DeleteIconEvent.java	(date 1621441032082)
+@@ -0,0 +1,24 @@
++package com.example.project.sticker;
++
++import android.view.MotionEvent;
++
++/**
++ * @author wupanjie
++ */
++
++public class DeleteIconEvent implements StickerIconEvent {
++  @Override
++  public void onActionDown(StickerView stickerView, MotionEvent event) {
++
++  }
++
++  @Override
++  public void onActionMove(StickerView stickerView, MotionEvent event) {
++
++  }
++
++  @Override
++  public void onActionUp(StickerView stickerView, MotionEvent event) {
++    stickerView.removeCurrentSticker();
++  }
++}
+Index: app/src/main/java/com/example/project/sticker/AbstractFlipEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/AbstractFlipEvent.java	(date 1621441032092)
++++ app/src/main/java/com/example/project/sticker/AbstractFlipEvent.java	(date 1621441032092)
+@@ -0,0 +1,23 @@
++package com.example.project.sticker;
++
++import android.view.MotionEvent;
++
++public abstract class AbstractFlipEvent implements com.xiaopo.sticker.StickerIconEvent {
++
++  @Override
++  public void onActionDown(StickerView stickerView, MotionEvent event) {
++
++  }
++
++  @Override
++  public void onActionMove(StickerView stickerView, MotionEvent event) {
++
++  }
++
++  @Override
++  public void onActionUp(StickerView stickerView, MotionEvent event) {
++    stickerView.flipCurrentSticker(getFlipDirection());
++  }
++
++  @StickerView.Flip protected abstract int getFlipDirection();
++}
+Index: app/src/main/java/com/example/project/sticker/StickerIconEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/project/sticker/StickerIconEvent.java	(date 1621441032041)
++++ app/src/main/java/com/example/project/sticker/StickerIconEvent.java	(date 1621441032041)
+@@ -0,0 +1,15 @@
++package com.example.project.sticker;
++
++import android.view.MotionEvent;
++
++/**
++ * @author wupanjie
++ */
++
++public interface StickerIconEvent {
++  void onActionDown(StickerView stickerView, MotionEvent event);
++
++  void onActionMove(StickerView stickerView, MotionEvent event);
++
++  void onActionUp(StickerView stickerView, MotionEvent event);
++}
+Index: app/src/main/res/values/attrs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/attrs.xml	(date 1621264689395)
++++ app/src/main/res/values/attrs.xml	(date 1621264689395)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <declare-styleable name="StickerView">
++        <attr name="showIcons" format="boolean" />
++        <attr name="showBorder" format="boolean" />
++        <attr name="bringToFrontCurrentSticker" format="boolean" />
++        <attr name="borderColor" format="color"/>
++        <attr name="borderAlpha" format="integer"/>
++    </declare-styleable>
++</resources>
+\ No newline at end of file
+diff --git app/src/main/res/drawable-v24/sticker_ic_close_white_18dp.png app/src/main/res/drawable-v24/sticker_ic_close_white_18dp.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..d4c57f398500062abcb1888b175e37ef59dc7b3e
+GIT binary patch
+literal 236
+zc$@+302BX-P)<h;3K|Lk000e1NJLTq000{R000{Z1^@s6jnwp200029Nkl<Zc-rmO
+zK?;O03<c1F7wOvSZCrRjk-3^)BBp}_5~lKhz%HbV;Kue@$&UsR3AHLT>{VE&70C_b
+zxsJl}f{)gw)q~KewQH><@a_pSB<D4O(C_}pzQzQC7V5nXk}ezVe?S;QyU~J!2Vz=(
+zFyPEWY|gGH5f<`<dN$bf)C8$^GTRIjnL`*WbzNdXFNEe0#?Ty<a!AcaCPy}hk)8Uh
+mbLubb)UWzIYyTh(`_=(k1=nkbY9E~d0000<MNUMnLSTa4O=X1u
+
+diff --git app/src/main/res/drawable-v24/sticker_ic_scale_white_18dp.png app/src/main/res/drawable-v24/sticker_ic_scale_white_18dp.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..8f0afc19b8e2c8bdfae0fd513353a0865aa88d15
+GIT binary patch
+literal 529
+zc$@(d0`C2ZP)<h;3K|Lk000e1NJLTq000{R000{Z1^@s6jnwp200006VoOIv0RI60
+z0RN!9r;`8x010qNS#tmY3ljhU3ljkVnw%H_000McNliru;0yu_5**dZSJeOj0iH=j
+zK~zY`?Ug-F!$1&5-#7^liG+e8DxgD1R5V<IYj6NgK}F92I0fgRfg(_0NQL+jAqij)
+z&1Y!^8(~LKfEZ~C@2=<V%zV2G|MuI=VuS9U0y(e%B)}WsKno~<3D5?{X6994%^9E_
+zU>oR_!-6!l!3ppPoB-L}FlDq2>;rwR84K9a{78@scORNrJ}+!R8TElD;0(A6*5}GH
+z1G1{1S+FFSI|mMdi(n%~(8Gs10*S%OKx1WeX=c~op~e`j6oUufmCW5ul__E>jlo({
+zT}Sh2MNk)516F~7yJsJPN#wsm^3DUVVm)9FH~@Bm#aUtqZ6Y5DoY%M@*5pfy@g=OS
+z1A8SeYV^MWbXEFxm7a}tGYo+18uD%g?y*EZ!PL~u-EYjSsG;nsj?J@5|5~MtCA66H
+zQZMCiRm%94yn6~(mTaoP8^E%9WwF@Jn!8VdBL(Z|Ob+$k1GZF3V!~?H$STomumY@0
+zbq!!su(m+Az&-FXH_XfmcOL-9I!9@6mxevM2Trw-w;y}<-M!=PO+CQ>_6O`8UO0$e
+TuZ!IZ00000NkvXXu0mjfVin!_
+
+diff --git app/src/main/res/drawable-v24/sticker_ic_flip_white_18dp.png app/src/main/res/drawable-v24/sticker_ic_flip_white_18dp.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..dfc0527f1012688396fdde3659d351729404f0ba
+GIT binary patch
+literal 208
+zc%17D@N?(olHy`uVBq!ia0vp^(jd&i1|)m0d<g|o(>+}rLn>}1|M>sko_Vi<<*cfP
+zAB<C$?M&tV=X`)EE8-dNk<AO*6q5yIrgbI+3iF$?uTQ=AzmS<#W}4=Mz{joUH$?`x
+zmTP>8<eDPie%>hQQFB(Io9=0s1&&%y{HHgpk`$YE(NyB)EQbV7`_vmpC1Y#NX03EL
+zHhs#OVrKi=IP3Zqxt3cBaUmJaM;1n#XhelKue$4D#>Oy7PugL<Ux*&ii42~uelF{r
+G5}E)NF-@WX
+
+diff --git app/src/main/res/drawable/popup.png app/src/main/res/drawable/popup.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..572e942c8e8a201fc416cacaa348412459c34504
+GIT binary patch
+literal 676816
+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
+I(EaoO0~??HmjD0&
+

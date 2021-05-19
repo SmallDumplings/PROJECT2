@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -7,16 +8,23 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.ViewCompat;
 
 
 import com.yalantis.ucrop.UCrop;
@@ -24,20 +32,33 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 
 public class TwoClass extends AppCompatActivity {
-    Button b1,b2,b3,b4, b5;
+    ImageButton b1,b2,b3,b4, b5;
     private FrameLayout container;
     private static final int REQUEST_IMAGE = 101;
     private String filename;
     private int xDelta, yDelta;
 
     static Bitmap bitmap;
+    String text;
+    TextView textView;
+
+    Button f74ok;
+    Button cancel;
+    EditText text_input;
+    RelativeLayout text_input_layout;
+    ConstraintLayout constraintLayout;
 
 
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.two_two_layout);
         container = findViewById(R.id.container);
+        textView = findViewById(R.id.text);
+        b5 = findViewById(R.id.b5);
+        b1 = findViewById(R.id.b1);
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +76,11 @@ public class TwoClass extends AppCompatActivity {
 
             }
         });
+//        arguments = getIntent().getExtras();
+//        text = arguments.get("text").toString();
+        text = getIntent().getStringExtra("text");
+        textView.setText(text);
+
 
     }
     @Override
@@ -155,6 +181,42 @@ public class TwoClass extends AppCompatActivity {
         }
         return result;
     }
+
+
+    public void addTextInfo() {
+
+        this.text_input_layout = (RelativeLayout) findViewById(R.id.addtextlayout);
+        this.text_input_layout.setVisibility(0);
+        this.text_input = (EditText) findViewById(R.id.textarea);
+        this.f74ok = (Button) findViewById(R.id.add);
+        this.cancel = (Button) findViewById(R.id.cancel);
+        this.f74ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (TwoClass.this.text_input.getText().toString().length() > 0) {
+                    TextSticker textSticker = new TextSticker(TwoClass.this);
+                    textSticker.setText(TwoClass.this.text_input.getText().toString());
+                    textSticker.setTextAlign(Layout.Alignment.ALIGN_CENTER);
+                    textSticker.resizeText();
+                    textSticker.setTextColor(ViewCompat.MEASURED_STATE_MASK);
+                    TwoClass.this.stickerView.addSticker(textSticker);
+                    TwoClass.this.stickerView.invalidate();
+                    TwoClass.this.text_input.setText("");
+                    TwoClass.this.text_input_layout.setVisibility(8);
+                    return;
+                }
+                Toast.makeText(TwoClass.this, "No Input", 0).show();
+            }
+        });
+
+        this.cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                TwoClass.this.text_input.setText("");
+                TwoClass.this.text_input_layout.setVisibility(8);
+            }
+        });
+
+    }
+
 }
 
 
