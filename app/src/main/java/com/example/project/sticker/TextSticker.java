@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.example.project.R;
+
 /**
  * Customize your sticker with text and image background.
  * You can place some text into a given region, however,
@@ -129,7 +131,7 @@ public class TextSticker extends Sticker {
   }
 
   @NonNull @Override
-  public com.xiaopo.sticker.TextSticker setAlpha(@IntRange(from = 0, to = 255) int alpha) {
+  public com.example.project.sticker.TextSticker setAlpha(@IntRange(from = 0, to = 255) int alpha) {
     textPaint.setAlpha(alpha);
     return this;
   }
@@ -140,14 +142,14 @@ public class TextSticker extends Sticker {
   }
 
   @Override
-  public com.xiaopo.sticker.TextSticker setDrawable(@NonNull Drawable drawable) {
+  public com.example.project.sticker.TextSticker setDrawable(@NonNull Drawable drawable) {
     this.drawable = drawable;
     realBounds.set(0, 0, getWidth(), getHeight());
     textRect.set(0, 0, getWidth(), getHeight());
     return this;
   }
 
-  @NonNull public com.xiaopo.sticker.TextSticker setDrawable(@NonNull Drawable drawable, @Nullable Rect region) {
+  @NonNull public com.example.project.sticker.TextSticker setDrawable(@NonNull Drawable drawable, @Nullable Rect region) {
     this.drawable = drawable;
     realBounds.set(0, 0, getWidth(), getHeight());
     if (region == null) {
@@ -158,22 +160,22 @@ public class TextSticker extends Sticker {
     return this;
   }
 
-  @NonNull public com.xiaopo.sticker.TextSticker setTypeface(@Nullable Typeface typeface) {
+  @NonNull public com.example.project.sticker.TextSticker setTypeface(@Nullable Typeface typeface) {
     textPaint.setTypeface(typeface);
     return this;
   }
 
-  @NonNull public com.xiaopo.sticker.TextSticker setTextColor(@ColorInt int color) {
+  @NonNull public com.example.project.sticker.TextSticker setTextColor(@ColorInt int color) {
     textPaint.setColor(color);
     return this;
   }
 
-  @NonNull public com.xiaopo.sticker.TextSticker setTextAlign(@NonNull Layout.Alignment alignment) {
+  @NonNull public com.example.project.sticker.TextSticker setTextAlign(@NonNull Layout.Alignment alignment) {
     this.alignment = alignment;
     return this;
   }
 
-  @NonNull public com.xiaopo.sticker.TextSticker setMaxTextSize(@Dimension(unit = Dimension.SP) float size) {
+  @NonNull public com.example.project.sticker.TextSticker setMaxTextSize(@Dimension(unit = Dimension.SP) float size) {
     textPaint.setTextSize(convertSpToPx(size));
     maxTextSizePixels = textPaint.getTextSize();
     return this;
@@ -185,18 +187,18 @@ public class TextSticker extends Sticker {
    * @param minTextSizeScaledPixels the minimum size to use for text in this view,
    * in scaled pixels.
    */
-  @NonNull public com.xiaopo.sticker.TextSticker setMinTextSize(float minTextSizeScaledPixels) {
+  @NonNull public com.example.project.sticker.TextSticker setMinTextSize(float minTextSizeScaledPixels) {
     minTextSizePixels = convertSpToPx(minTextSizeScaledPixels);
     return this;
   }
 
-  @NonNull public com.xiaopo.sticker.TextSticker setLineSpacing(float add, float multiplier) {
+  @NonNull public com.example.project.sticker.TextSticker setLineSpacing(float add, float multiplier) {
     lineSpacingMultiplier = multiplier;
     lineSpacingExtra = add;
     return this;
   }
 
-  @NonNull public com.xiaopo.sticker.TextSticker setText(@Nullable String text) {
+  @NonNull public com.example.project.sticker.TextSticker setText(@Nullable String text) {
     this.text = text;
     return this;
   }
@@ -209,7 +211,7 @@ public class TextSticker extends Sticker {
    * Resize this view's text size with respect to its width and height
    * (minus padding). You should always call this method after the initialization.
    */
-  @NonNull public com.xiaopo.sticker.TextSticker resizeText() {
+  @NonNull public com.example.project.sticker.TextSticker resizeText() {
     final int availableHeightPixels = textRect.height();
 
     final int availableWidthPixels = textRect.width();

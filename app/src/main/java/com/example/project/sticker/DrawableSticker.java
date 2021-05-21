@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 /**
  * @author wupanjie
  */
-public class DrawableSticker extends com.xiaopo.sticker.Sticker {
+public class DrawableSticker extends com.example.project.sticker.Sticker {
 
   private Drawable drawable;
   private Rect realBounds;
@@ -26,7 +26,7 @@ public class DrawableSticker extends com.xiaopo.sticker.Sticker {
   }
 
   @Override
-  public com.xiaopo.sticker.DrawableSticker setDrawable(@NonNull Drawable drawable) {
+  public com.example.project.sticker.DrawableSticker setDrawable(@NonNull Drawable drawable) {
     this.drawable = drawable;
     return this;
   }
@@ -41,7 +41,7 @@ public class DrawableSticker extends com.xiaopo.sticker.Sticker {
   }
 
   @NonNull @Override
-  public com.xiaopo.sticker.DrawableSticker setAlpha(@IntRange(from = 0, to = 255) int alpha) {
+  public com.example.project.sticker.DrawableSticker setAlpha(@IntRange(from = 0, to = 255) int alpha) {
     drawable.setAlpha(alpha);
     return this;
   }

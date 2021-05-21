@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.project.sticker.StickerView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.lang.ref.WeakReference;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     String text;
 
     Button start;
+    StickerView stickerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTextInputLayout = (TextInputLayout) findViewById(R.id.textInputLayout);
         mEditText = (EditText) findViewById(R.id.editTextName);
+        stickerView = findViewById(R.id.sticker_view);
 
         mEditText.setOnEditorActionListener(ActionListener.newInstance(this));
         start=findViewById(R.id.start);

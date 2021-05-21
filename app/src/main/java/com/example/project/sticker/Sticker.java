@@ -43,7 +43,7 @@ public abstract class Sticker {
     return isFlippedHorizontally;
   }
 
-  @NonNull public com.xiaopo.sticker.Sticker setFlippedHorizontally(boolean flippedHorizontally) {
+  @NonNull public com.example.project.sticker.Sticker setFlippedHorizontally(boolean flippedHorizontally) {
     isFlippedHorizontally = flippedHorizontally;
     return this;
   }
@@ -52,7 +52,7 @@ public abstract class Sticker {
     return isFlippedVertically;
   }
 
-  @NonNull public com.xiaopo.sticker.Sticker setFlippedVertically(boolean flippedVertically) {
+  @NonNull public com.example.project.sticker.Sticker setFlippedVertically(boolean flippedVertically) {
     isFlippedVertically = flippedVertically;
     return this;
   }
@@ -61,7 +61,7 @@ public abstract class Sticker {
     return matrix;
   }
 
-  public com.xiaopo.sticker.Sticker setMatrix(@Nullable Matrix matrix) {
+  public com.example.project.sticker.Sticker setMatrix(@Nullable Matrix matrix) {
     this.matrix.set(matrix);
     return this;
   }
@@ -72,11 +72,11 @@ public abstract class Sticker {
 
   public abstract int getHeight();
 
-  public abstract com.xiaopo.sticker.Sticker setDrawable(@NonNull Drawable drawable);
+  public abstract com.example.project.sticker.Sticker setDrawable(@NonNull Drawable drawable);
 
   @NonNull public abstract Drawable getDrawable();
 
-  @NonNull public abstract com.xiaopo.sticker.Sticker setAlpha(@IntRange(from = 0, to = 255) int alpha);
+  @NonNull public abstract com.example.project.sticker.Sticker setAlpha(@IntRange(from = 0, to = 255) int alpha);
 
   public float[] getBoundPoints() {
     float[] points = new float[8];

@@ -708,11 +708,11 @@ public class StickerView extends FrameLayout {
     invalidate();
   }
 
-  @NonNull public com.xiaopo.sticker.StickerView addSticker(@NonNull Sticker sticker) {
+  @NonNull public com.example.project.sticker.StickerView addSticker(@NonNull Sticker sticker) {
     return addSticker(sticker, Sticker.Position.CENTER);
   }
 
-  public com.xiaopo.sticker.StickerView addSticker(@NonNull final Sticker sticker,
+  public com.example.project.sticker.StickerView addSticker(@NonNull final Sticker sticker,
                                                    final @Sticker.Position int position) {
     if (ViewCompat.isLaidOut(this)) {
       addStickerImmediately(sticker, position);
@@ -814,13 +814,13 @@ public class StickerView extends FrameLayout {
     return locked;
   }
 
-  @NonNull public com.xiaopo.sticker.StickerView setLocked(boolean locked) {
+  @NonNull public com.example.project.sticker.StickerView setLocked(boolean locked) {
     this.locked = locked;
     invalidate();
     return this;
   }
 
-  @NonNull public com.xiaopo.sticker.StickerView setMinClickDelayTime(int minClickDelayTime) {
+  @NonNull public com.example.project.sticker.StickerView setMinClickDelayTime(int minClickDelayTime) {
     this.minClickDelayTime = minClickDelayTime;
     return this;
   }
@@ -833,13 +833,13 @@ public class StickerView extends FrameLayout {
     return constrained;
   }
 
-  @NonNull public com.xiaopo.sticker.StickerView setConstrained(boolean constrained) {
+  @NonNull public com.example.project.sticker.StickerView setConstrained(boolean constrained) {
     this.constrained = constrained;
     postInvalidate();
     return this;
   }
 
-  @NonNull public com.xiaopo.sticker.StickerView setOnStickerOperationListener(
+  @NonNull public com.example.project.sticker.StickerView setOnStickerOperationListener(
       @Nullable OnStickerOperationListener onStickerOperationListener) {
     this.onStickerOperationListener = onStickerOperationListener;
     return this;

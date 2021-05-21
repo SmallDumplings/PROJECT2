@@ -2,7 +2,7 @@ package com.example.project.sticker;
 
 import android.view.MotionEvent;
 
-public abstract class AbstractFlipEvent implements com.xiaopo.sticker.StickerIconEvent {
+public abstract class AbstractFlipEvent implements com.example.project.sticker.StickerIconEvent {
 
   @Override
   public void onActionDown(StickerView stickerView, MotionEvent event) {
