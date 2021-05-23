@@ -25,6 +25,7 @@ public class one_oneFragment extends Fragment implements View.OnClickListener {
 
         ib1.setOnClickListener(this);
        return inflater.inflate(R.layout.fragment_one_one, container, false);
+
     }
 
 

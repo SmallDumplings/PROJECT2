@@ -22,7 +22,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            android:theme="@style/Theme.AppCompat.Dialog";>
+
         </activity>
         <activity android:name=".TwoClass">
             <intent-filter>
@@ -30,7 +30,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            android:theme="@style/Theme.AppCompat.Dialog";>
         </activity>
     </application>
 </manifest>

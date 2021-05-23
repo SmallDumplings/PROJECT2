@@ -23,7 +23,7 @@
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib3"></ImageButton>
+                android:id="@+id/ib2"></ImageButton>
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"

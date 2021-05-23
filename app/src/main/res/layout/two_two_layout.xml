@@ -67,10 +67,10 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="@color/grey"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/rounded_yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +81,7 @@
             android:id="@+id/b1"
             android:layout_width="60dp"
             android:layout_height="match_parent"
+            android:background="@drawable/rounded_pink"
             android:layout_marginRight="10dp"
             android:onClick="Change"
             android:src="@drawable/ic_logo" />
@@ -89,6 +90,7 @@
             android:id="@+id/b2"
             android:layout_width="60dp"
             android:layout_height="match_parent"
+            android:background="@drawable/rounded_pink"
             android:layout_marginRight="10dp"
             android:onClick="Change"
             android:src="@drawable/ic_text" />
@@ -97,12 +99,15 @@
         <ImageButton
             android:id="@+id/b4"
             android:layout_width="60dp"
+            android:background="@drawable/rounded_pink"
             android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
             android:src="@drawable/ic_back" />
 
         <ImageButton
             android:id="@+id/b5"
             android:layout_width="60dp"
+            android:background="@drawable/rounded_pink"
             android:layout_height="match_parent"
             android:src="@drawable/ic_add" />
 

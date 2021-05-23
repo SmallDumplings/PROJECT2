@@ -12,146 +12,202 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
             <ImageButton
+                android:id="@+id/ib1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib1"></ImageButton>
+                android:src="@drawable/a1"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib2"></ImageButton>
+                android:src="@drawable/a2"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib3"></ImageButton>
+                android:src="@drawable/a3"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib4"></ImageButton>
+                android:src="@drawable/a4"></ImageButton>
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
             <ImageButton
+                android:id="@+id/ib5"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib5"></ImageButton>
+                android:src="@drawable/a5"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib6"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib6"></ImageButton>
+                android:src="@drawable/a6"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib7"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib7"></ImageButton>
+                android:src="@drawable/a7"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib8"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib8"></ImageButton>
+                android:src="@drawable/a8"></ImageButton>
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
             <ImageButton
+                android:id="@+id/ib9"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib9"></ImageButton>
+                android:src="@drawable/a9"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib10"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib10"></ImageButton>
+                android:src="@drawable/a10"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib11"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib11"></ImageButton>
+                android:src="@drawable/a11"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib12"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib12"></ImageButton>
+                android:src="@drawable/a12"></ImageButton>
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
             <ImageButton
+                android:id="@+id/ib13"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib13"></ImageButton>
+                android:src="@drawable/a13"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib14"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib14"></ImageButton>
+                android:src="@drawable/a14"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib15"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib15"></ImageButton>
+                android:src="@drawable/a15"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib16"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib16"></ImageButton>
+                android:src="@drawable/a16"></ImageButton>
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
             <ImageButton
+                android:id="@+id/ib17"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib17"></ImageButton>
+                android:src="@drawable/a17"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib18"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib18"></ImageButton>
+                android:src="@drawable/a18"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib19"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib19"></ImageButton>
+                android:src="@drawable/a19"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib20"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib20"></ImageButton>
+                android:src="@drawable/a20"></ImageButton>
 
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
             <ImageButton
+                android:id="@+id/ib21"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib21"></ImageButton>
+                android:src="@drawable/a21"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib22"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib22"></ImageButton>
+                android:src="@drawable/a22"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib23"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib23"></ImageButton>
+                android:src="@drawable/a23"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib24"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib24"></ImageButton>
+                android:src="@drawable/a24"></ImageButton>
 
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
             <ImageButton
+                android:id="@+id/ib25"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib25"></ImageButton>
+                android:src="@drawable/a25"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib26"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib26"></ImageButton>
+                android:src="@drawable/a26"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib27"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib27"></ImageButton>
+                android:src="@drawable/a27"></ImageButton>
+
             <ImageButton
+                android:id="@+id/ib28"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/ib28"></ImageButton>
+                android:src="@drawable/a28"></ImageButton>
         </TableRow>
 
     </TableLayout>
