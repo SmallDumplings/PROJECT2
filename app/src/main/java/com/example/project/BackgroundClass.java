@@ -45,38 +45,151 @@ public class BackgroundClass extends AppCompatActivity  {
             public void onClick(View view) {
                 onClickk(R.drawable.b1);
         }});
-        ib1.setOnClickListener(new View.OnClickListener() {
+        ib2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onClickk(R.drawable.b2);
             }});
-        ib1.setOnClickListener(new View.OnClickListener() {
+        ib3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onClickk(R.drawable.b3);
             }});
-        ib1.setOnClickListener(new View.OnClickListener() {
+        ib4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onClickk(R.drawable.b4);
             }});
-        ib1.setOnClickListener(new View.OnClickListener() {
+        ib5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onClickk(R.drawable.b5);
             }});
-        ib1.setOnClickListener(new View.OnClickListener() {
+        ib6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onClickk(R.drawable.b6);
             }});
-        ib1.setOnClickListener(new View.OnClickListener() {
+        ib7.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onClickk(R.drawable.b7);
             }});
-        ib1.setOnClickListener(new View.OnClickListener() {
+        ib8.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onClickk(R.drawable.b8);
             }});
-        ib1.setOnClickListener(new View.OnClickListener() {
+        ib9.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onClickk(R.drawable.b9);
             }});
+        ib10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b10);
+            }
+        });
+        ib11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b11);
+            }
+        });
+        ib12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b12);
+            }
+        });
+        ib13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b13);
+            }
+        });
+        ib14.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b14);
+            }
+        });
+        ib15.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b15);
+            }
+        });
+        ib16.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b16);
+            }
+        });
+        ib17.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b17);
+            }
+        });
+        ib18.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b18);
+            }
+        });
+        ib19.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b19);
+            }
+        });
+        ib20.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b20);
+            }
+        });
+        ib21.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b21);
+            }
+        });
+        ib22.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b22);
+            }
+        });
+        ib23.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b23);
+            }
+        });
+        ib24.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b24);
+            }
+        });
+        ib25.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b25);
+            }
+        });
+        ib26.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b26);
+            }
+        });
+        ib27.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b27);
+            }
+        }); ib28.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickk(R.drawable.b28);
+            }
+        });
 
 
 

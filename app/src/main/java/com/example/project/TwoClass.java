@@ -98,9 +98,9 @@ public class TwoClass extends AppCompatActivity {
                 startActivity(intent);
 
 
-                if(i>0){
-                   createLogo(i);
-                }
+
+                createLogo(i);
+
 
             }
         });
@@ -109,9 +109,9 @@ public class TwoClass extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TwoClass.this, BackgroundClass.class);
                 startActivity(intent);
-                if(b>0){
-                    createBackground(b);
-                }
+
+                createBackground(b);
+
 
             }
         });
@@ -273,10 +273,13 @@ public class TwoClass extends AppCompatActivity {
         TextSticker textSticker = new TextSticker(TwoClass.this);
         textSticker.resizeText();
         TwoClass.this.stickerView.addSticker(new DrawableSticker(ContextCompat.getDrawable(TwoClass.this, i)));
+        textSticker.resizeText();
         TwoClass.this.stickerView.invalidate();
+
     }
     public void createBackground(int b){
         TextSticker textSticker = new TextSticker(TwoClass.this);
+        textSticker.resizeText();
         textSticker.resizeText();
         TwoClass.this.stickerView.setBackgroundResource(b);
     }

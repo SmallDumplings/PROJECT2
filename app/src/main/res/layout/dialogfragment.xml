@@ -12,23 +12,31 @@
         android:layout_height="65dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rounded_pink"
+        android:gravity="center">
 
         <Button
             android:id="@+id/bb1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_yellow"
+            android:text="Медицина"
             android:onClick="Change"></Button>
 
         <Button
             android:id="@+id/bb2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_yellow"
+            android:text="Еда"
             android:onClick="Change"></Button>
 
         <Button
             android:id="@+id/bb3"
             android:layout_width="wrap_content"
+            android:background="@drawable/rounded_yellow"
+            android:text="Животные"
             android:layout_height="wrap_content"></Button>
 
     </LinearLayout>
