@@ -31,15 +31,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></Button>
 
-        <Button
-            android:id="@+id/bb4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Button>
-
-        <Button
-            android:id="@+id/bb5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Button>
     </LinearLayout>
 
     <FrameLayout
@@ -51,11 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/l2">
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/f1"
-            android:name="com.example.project.one_oneFragment"></fragment>
+
 
 
     </FrameLayout>

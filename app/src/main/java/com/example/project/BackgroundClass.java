@@ -7,7 +7,7 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class BackgroundClass extends AppCompatActivity {
+public class BackgroundClass extends AppCompatActivity  {
     ImageButton ib1, ib2, ib3, ib4, ib5, ib6, ib7,ib8, ib9, ib10, ib11, ib12, ib13, ib14,ib15,ib16,ib17,ib18,ib19,ib20,ib21,ib22,ib23,ib24,ib25,ib26,ib27,ib28;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +42,50 @@ public class BackgroundClass extends AppCompatActivity {
         ib27=findViewById(R.id.ib27);
         ib28=findViewById(R.id.ib28);
         ib1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              onClick(R.drawable.b1);
+            public void onClick(View view) {
+                onClickk(R.drawable.b1);
+        }});
+        ib1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClickk(R.drawable.b2);
+            }});
+        ib1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClickk(R.drawable.b3);
+            }});
+        ib1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClickk(R.drawable.b4);
+            }});
+        ib1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClickk(R.drawable.b5);
+            }});
+        ib1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClickk(R.drawable.b6);
+            }});
+        ib1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClickk(R.drawable.b7);
+            }});
+        ib1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClickk(R.drawable.b8);
+            }});
+        ib1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                onClickk(R.drawable.b9);
             }});
 
+
+
+
+
     }
-    public void onClick(View view){
-        ImageButton imageButton = (ImageButton) view;
+    public void onClickk(int b){
         Intent intent = new Intent(BackgroundClass.this, TwoClass.class);
-        TwoClass.bitmap = imageButton.getDrawingCache();
+        intent.putExtra("b", b);
         startActivity(intent);
     }
 

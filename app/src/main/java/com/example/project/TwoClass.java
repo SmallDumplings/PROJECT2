@@ -25,9 +25,14 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 
+import com.example.project.sticker.DrawableSticker;
 import com.example.project.sticker.StickerView;
 import com.example.project.sticker.TextSticker;
 import com.yalantis.ucrop.UCrop;
@@ -50,6 +55,10 @@ public class TwoClass extends AppCompatActivity {
     RelativeLayout text_input_layout;
     ConstraintLayout constraintLayout;
     StickerView stickerView;
+    ImageView save;
+    ImageView clearData;
+    int i, b;
+
 
 
 
@@ -63,6 +72,15 @@ public class TwoClass extends AppCompatActivity {
         b2=findViewById(R.id.b2);
         b4=findViewById(R.id.b4);
         b1 = findViewById(R.id.b1);
+        i = getIntent().getIntExtra("view", i);
+        b = getIntent().getIntExtra("b", b);
+        //save = (ImageView) findViewById(R.id.save);
+        //save.setOnClickListener(this);
+        //clearData = (ImageView) findViewById(R.id.clearitems);
+//        //clearData.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {}
+//        });
         stickerView=findViewById(R.id.sticker_view);
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +96,22 @@ public class TwoClass extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TwoClass.this, DialogFragment.class);
                 startActivity(intent);
+
+
+                if(i>0){
+                   createLogo(i);
+                }
+
+            }
+        });
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TwoClass.this, BackgroundClass.class);
+                startActivity(intent);
+                if(b>0){
+                    createBackground(b);
+                }
 
             }
         });
@@ -235,6 +269,19 @@ public class TwoClass extends AppCompatActivity {
         });
 
     }
+    public void createLogo(int i){
+        TextSticker textSticker = new TextSticker(TwoClass.this);
+        textSticker.resizeText();
+        TwoClass.this.stickerView.addSticker(new DrawableSticker(ContextCompat.getDrawable(TwoClass.this, i)));
+        TwoClass.this.stickerView.invalidate();
+    }
+    public void createBackground(int b){
+        TextSticker textSticker = new TextSticker(TwoClass.this);
+        textSticker.resizeText();
+        TwoClass.this.stickerView.setBackgroundResource(b);
+    }
+
+
 
 }
 
