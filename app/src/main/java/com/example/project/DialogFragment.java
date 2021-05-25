@@ -20,9 +20,12 @@ public class DialogFragment extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialogfragment);
         bb1 = findViewById(R.id.bb1);
+        bb2 = findViewById(R.id.bb2);
+        bb3 = findViewById(R.id.bb3);
+
         bb1.setOnClickListener(this);
-
-
+        bb2.setOnClickListener(this);
+        bb3.setOnClickListener(this);
     }
 
 
