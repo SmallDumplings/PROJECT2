@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -12,14 +13,7 @@ import android.text.Layout;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 
 import androidx.annotation.Nullable;
@@ -28,10 +22,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import com.bumptech.glide.Glide;
 import com.example.project.sticker.DrawableSticker;
 import com.example.project.sticker.StickerView;
 import com.example.project.sticker.TextSticker;
@@ -51,13 +47,17 @@ public class TwoClass extends AppCompatActivity {
 
     Button f74ok;
     Button cancel;
+    LinearLayout infoLayout;
     EditText text_input;
     RelativeLayout text_input_layout;
     ConstraintLayout constraintLayout;
     StickerView stickerView;
+    HorizontalScrollView infoHorizentallayout;
     ImageView save;
     ImageView clearData;
     int i, b;
+    ImageView view;
+    ImageView imbg;
 
 
 
@@ -74,13 +74,8 @@ public class TwoClass extends AppCompatActivity {
         b1 = findViewById(R.id.b1);
         i = getIntent().getIntExtra("view", i);
         b = getIntent().getIntExtra("b", b);
-        //save = (ImageView) findViewById(R.id.save);
-        //save.setOnClickListener(this);
-        //clearData = (ImageView) findViewById(R.id.clearitems);
-//        //clearData.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {}
-//        });
+        //imbg = findViewById(R.id.imbg);
+
         stickerView=findViewById(R.id.sticker_view);
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,9 +92,6 @@ public class TwoClass extends AppCompatActivity {
                 Intent intent = new Intent(TwoClass.this, DialogFragment.class);
                 startActivity(intent);
 
-
-
-                createLogo(i);
 
 
             }
@@ -270,23 +262,18 @@ public class TwoClass extends AppCompatActivity {
 
     }
     public void createLogo(int i){
-        TextSticker textSticker = new TextSticker(TwoClass.this);
-        textSticker.resizeText();
-        TwoClass.this.stickerView.addSticker(new DrawableSticker(ContextCompat.getDrawable(TwoClass.this, i)));
-        textSticker.resizeText();
-        TwoClass.this.stickerView.invalidate();
 
+        view=findViewById(i);
+        TwoClass.this.stickerView.addSticker(new DrawableSticker(ContextCompat.getDrawable(TwoClass.this, i)));
+        TwoClass.this.stickerView.invalidate();
+        infoLayout.addView(view);
     }
     public void createBackground(int b){
-        TextSticker textSticker = new TextSticker(TwoClass.this);
-        textSticker.resizeText();
-        textSticker.resizeText();
-        TwoClass.this.stickerView.setBackgroundResource(b);
+
+        //imbg.setImageDrawable(ContextCompat.getDrawable(this, b));
     }
-
-
-
 }
+
 
 
 

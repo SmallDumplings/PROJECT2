@@ -5,34 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto">
-    <RelativeLayout
-        android:layout_marginTop="6dp"
-        android:id="@+id/mainLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
-
-        <ImageView
-            android:id="@+id/clearitems"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:background="@drawable/rounded_yellow" />
-
-
-        <ImageView
-            android:id="@+id/save"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/rounded_pink" />
-
-
-    </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -44,19 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
-
-        <com.example.project.sticker.StickerView
-            android:id="@+id/sticker_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            ads:showBorder="true"
-            ads:showIcons="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
 
 
@@ -81,6 +40,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <com.example.project.sticker.StickerView
+                    android:id="@+id/sticker_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center"
+                    ads:showBorder="true"
+                    ads:showIcons="true"
+            >
+            </com.example.project.sticker.StickerView>
 
         </RelativeLayout>
 
