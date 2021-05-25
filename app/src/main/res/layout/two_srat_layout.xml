@@ -39,7 +39,6 @@
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_pink"
-        android:onClick="onClick"
         app:counterEnabled="true"
         app:counterMaxLength="50"
         app:errorEnabled="true"

@@ -36,7 +36,7 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 
 public class TwoClass extends AppCompatActivity {
-    ImageButton b1,b2,b4, b5;
+    ImageButton b1, b2, b4, b5;
     private FrameLayout container;
     private static final int REQUEST_IMAGE = 101;
     private String filename;
@@ -60,8 +60,6 @@ public class TwoClass extends AppCompatActivity {
     ImageView imbg;
 
 
-
-
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +67,22 @@ public class TwoClass extends AppCompatActivity {
         setContentView(R.layout.two_two_layout);
         container = findViewById(R.id.container);
         b5 = findViewById(R.id.b5);
-        b2=findViewById(R.id.b2);
-        b4=findViewById(R.id.b4);
+        b2 = findViewById(R.id.b2);
+        b4 = findViewById(R.id.b4);
         b1 = findViewById(R.id.b1);
         i = getIntent().getIntExtra("view", i);
         b = getIntent().getIntExtra("b", b);
         //imbg = findViewById(R.id.imbg);
 
-        stickerView=findViewById(R.id.sticker_view);
+        stickerView = findViewById(R.id.sticker_view);
+        text = getIntent().getStringExtra("text");
+        TextSticker textSticker = new TextSticker(TwoClass.this);
+        textSticker.setText(text);
+        textSticker.setTextAlign(Layout.Alignment.ALIGN_CENTER);
+        textSticker.resizeText();
+        textSticker.setTextColor(ViewCompat.MEASURED_STATE_MASK);
+        stickerView.addSticker(textSticker);
+        stickerView.invalidate();
         b5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,7 +99,6 @@ public class TwoClass extends AppCompatActivity {
                 startActivity(intent);
 
 
-
             }
         });
         b4.setOnClickListener(new View.OnClickListener() {
@@ -108,14 +113,7 @@ public class TwoClass extends AppCompatActivity {
             }
         });
 
-        text = getIntent().getStringExtra("text");
-        TextSticker textSticker = new TextSticker(TwoClass.this);
-        textSticker.setText(text);
-        textSticker.setTextAlign(Layout.Alignment.ALIGN_CENTER);
-        textSticker.resizeText();
-        textSticker.setTextColor(ViewCompat.MEASURED_STATE_MASK);
-        stickerView.addSticker(textSticker);
-        stickerView.invalidate();
+
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,8 +125,9 @@ public class TwoClass extends AppCompatActivity {
 
 
     }
+
     @Override
-    protected void onActivityResult ( int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
@@ -146,6 +145,7 @@ public class TwoClass extends AppCompatActivity {
             }
         }
     }
+
     private void createImageView() {
         File file = new File(getCacheDir(), filename);
         Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
@@ -159,6 +159,7 @@ public class TwoClass extends AppCompatActivity {
         container.addView(imageView);
         file.delete();
     }
+
     private void startCrop(Uri data) {
         String name = getFileName(data);
         File file = new File(getCacheDir(), name);
@@ -166,8 +167,10 @@ public class TwoClass extends AppCompatActivity {
         UCrop uCrop = UCrop.of(data, Uri.fromFile(file));
         uCrop.start(this);
     }
+
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
-        @Override public boolean onTouch(View view, MotionEvent event) {
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
             final int x = (int) event.getRawX();
             final int y = (int) event.getRawY();
 
@@ -261,14 +264,16 @@ public class TwoClass extends AppCompatActivity {
         });
 
     }
-    public void createLogo(int i){
 
-        view=findViewById(i);
+    public void createLogo(int i) {
+
+        view = findViewById(i);
         TwoClass.this.stickerView.addSticker(new DrawableSticker(ContextCompat.getDrawable(TwoClass.this, i)));
         TwoClass.this.stickerView.invalidate();
         infoLayout.addView(view);
     }
-    public void createBackground(int b){
+
+    public void createBackground(int b) {
 
         //imbg.setImageDrawable(ContextCompat.getDrawable(this, b));
     }
